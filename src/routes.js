@@ -25,6 +25,9 @@ import Maps from "views/Map.js";
 import UserPage from "views/User.js";
 import UpgradeToPro from "views/Upgrade.js";
 
+// auth
+import Signin from "views/auths/Signin";
+
 var routes = [
   {
     path: "/dashboard",
@@ -82,6 +85,13 @@ var routes = [
     icon: "nc-icon nc-spaceship",
     component: UpgradeToPro,
     layout: "/admin",
+  },
+  {
+    path: "/signin",
+    name: "Admin Signin",
+    icon: "nc-icon nc-spaceship",
+    component: Signin,
+    layout: "/auth",
   },
 ];
 export default routes;

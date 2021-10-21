@@ -26,11 +26,13 @@ import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 
 import AdminLayout from "layouts/Admin.js";
+import AuthLayout from "layouts/Auth.js";
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
+      <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
       <Redirect to="/admin/dashboard" />
     </Switch>
   </BrowserRouter>,
