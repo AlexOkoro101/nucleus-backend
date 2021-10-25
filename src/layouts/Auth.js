@@ -1,7 +1,6 @@
 import React from "react";
 import routes from "routes.js";
-import { Route, Switch, useLocation } from "react-router-dom";
-import PerfectScrollbar from "perfect-scrollbar";
+import { Route, Switch } from "react-router-dom";
 
 const Auth = () => {
   return (

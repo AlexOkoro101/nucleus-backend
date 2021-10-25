@@ -23,6 +23,7 @@ import { Nav } from "reactstrap";
 import PerfectScrollbar from "perfect-scrollbar";
 
 import logo from "logo.svg";
+import "./../../assets/css/Login.css"; // login
 
 var ps;
 
@@ -73,7 +74,8 @@ function Sidebar(props) {
             return (
               <li
                 className={
-                  activeRoute(prop.path) + (prop.pro ? " active-pro" : "")
+                  activeRoute(prop.path) + (prop.pro ? " active-pro" : ""),
+                  prop.display === true ? "do-not-display" : ""
                 }
                 key={key}
               >

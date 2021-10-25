@@ -28,6 +28,13 @@ import UpgradeToPro from "views/Upgrade.js";
 // auth
 import Signin from "views/auths/Signin";
 
+// admins
+import Admins from "views/admins/Admins";
+import AdminsCreateAdmin from "views/admins/CreateAdmin";
+
+// plans
+import Plans from "views/plans/Plans";
+
 var routes = [
   {
     path: "/dashboard",
@@ -72,26 +79,38 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/typography",
-    name: "Typography",
-    icon: "nc-icon nc-caps-small",
-    component: Typography,
+    path: "/admins",
+    name: "Admin Management",
+    icon: "nc-icon nc-circle-10",
+    component: Admins,
     layout: "/admin",
   },
   {
-    pro: true,
-    path: "/upgrade",
-    name: "Upgrade to PRO",
-    icon: "nc-icon nc-spaceship",
-    component: UpgradeToPro,
+    path: "/admins-create",
+    name: "Create New Admin",
+    icon: "nc-icon nc-circle-10",
+    component: AdminsCreateAdmin,
+    layout: "/admin",
+    display: true,
+  },
+
+  // plans
+  {
+    path: "/plans",
+    name: "All Plans",
+    icon: "nc-icon nc-tile-56",
+    component: Plans,
     layout: "/admin",
   },
+
+  // auth 
   {
     path: "/signin",
     name: "Admin Signin",
-    icon: "nc-icon nc-spaceship",
+    icon: "nc-icon nc-circle-10",
     component: Signin,
     layout: "/auth",
+    display: true,
   },
 ];
 export default routes;
