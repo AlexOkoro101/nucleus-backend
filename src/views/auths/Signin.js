@@ -15,8 +15,17 @@ import NotificationAlert from "react-notification-alert";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
 import { Redirect, useHistory } from "react-router-dom";
+import { enviroment } from "variables/enviroment";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { login } from "redux/userSlice";
 
 const Signin = () => {
+  const user = useSelector(state => state.user)
+  const dispatch = useDispatch();
+  console.log(user)
+
+
   const notificationAlert = React.useRef();
   const [email, setEmail] = useState("francis@nucleus.com.ng");
   const [password, setPassword] = useState("080665");
@@ -35,7 +44,7 @@ const Signin = () => {
     setIsLoading(true);
 
     axios
-      .post(`${process.env.REACT_APP_API_BASE_URL}backend/auth/signin`, {
+      .post(enviroment.BASE_URL + "backend/auth/signin", {
         email: email,
         password: password,
       })
@@ -46,11 +55,18 @@ const Signin = () => {
         if (response.status === 200) {
           if (response.data.status === true) {
             // save token and info to local storage
-            localStorage.setItem("user", JSON.stringify(response.data.user)); //stringify object and store
-            localStorage.setItem(
-              "token",
-              response.data.token.original.access_token
-            ); //store token
+            const now = new Date();
+            const user = {
+              ...response.data.user,
+              token: response.data.token.original.access_token,
+              expiry: now.getTime() + 3600000,
+            }
+            localStorage.setItem("user", JSON.stringify(user)); //stringify object and store
+           
+
+            // dispatch(
+            //   login(response.data.token.original.access_token)
+            // )
 
             // redirect user to homepage
             history.push('/admin/dashboard');

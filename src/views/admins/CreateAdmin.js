@@ -19,6 +19,7 @@ import Loader from "react-loader-spinner";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useHistory } from "react-router-dom";
+import { enviroment } from "variables/enviroment";
 
 const schema = Yup.object().shape({
   firstName: Yup.string()
@@ -35,78 +36,95 @@ const schema = Yup.object().shape({
 });
 
 const CreateAdmin = () => {
+  var Spinner = require('react-spinkit');
   const notificationAlert = React.useRef();
-  const [isLoading, setIsLoading] = useState(false);
-  const [token] = useState(localStorage.getItem("token"));
+  const [isLoading, setisLoading] = useState(false);
+  const [token, settoken] = useState(null)
   const history = useHistory();
+
+  useEffect(() => {
+    getToken()
+    return () => {
+      getToken()
+    }
+  }, [])
+
+  const getToken = () => {
+    const user = localStorage.getItem("user");
+
+    if(!user) return;
+
+    const formatItem = JSON.parse(user);
+
+    if(formatItem?.token) {
+      settoken(formatItem?.token)
+    }
+  }
+
 
   // create admin
   const createAdmin = (data) => {
-    setIsLoading(true); // loading
+    setisLoading(true); // loading
 
-    axios
-      .post(
-        `${process.env.REACT_APP_API_BASE_URL}backend/admin`,
-        {
-          email: data.email,
-          firstname: data.firstName,
-          lastname: data.lastName,
-          phoneNumber: data.phoneNumber,
-          gender: data.gender,
-          accessLevel: data.accessLevel,
-          password: "nucluesAdmin",
-        },
-        {
-          timeout: 1000,
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((response) => {
-        if (response.status === 200) {
-          if (response.data.status === true) {
+    var myHeaders = new Headers();
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      firstname: data.firstName,
+      "lastname": data.lastName,
+      "email": data.email,
+      "phoneNumber": data.phoneNumber,
+      "gender": data.gender,
+      "accessLevel": 1,
+      "password": data.password,
+      "status": 1
+    });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch(enviroment.BASE_URL + "backend/admin", requestOptions)
+      .then(response => {
+        setisLoading(false)
+        return response.json()
+      })
+      .then(result => {
+        console.log(result)
+        if(result?.errors) {
+          Object.keys(result.errors).map(function(key, index) {
             notificationAlert.current.notificationAlert({
               place: "tr",
-              message: <div>{response.data.msg}</div>,
-              type: "success",
+              message: (
+                <div>
+                  <div>{result.errors[key][0]}</div>
+                </div>
+              ),
+              type: "danger",
               icon: "nc-icon nc-bell-55",
             });
-
-            setTimeout(() => {
-                history.push("/admin");
-            }, 2000);
-          }
+          });
         }
-      })
-      .catch((error) => {
-        if (error.response.status === 401) {
+
+        if(result?.status) {
           notificationAlert.current.notificationAlert({
             place: "tr",
-            message: <div>User is not authenticated</div>,
-            type: "danger",
+            message: (
+              <div>
+                <div>Admin created Successfully</div>
+              </div>
+            ),
+            type: "success",
             icon: "nc-icon nc-bell-55",
           });
-
-          // do redirect to login page...
-          setTimeout(() => {
-            window.location = "/auth/signin";
-          }, 2000);
-          return;
         }
-
-        notificationAlert.current.notificationAlert({
-          place: "tr",
-          message: <div>An error occurred, could not create admin!</div>,
-          type: "danger",
-          icon: "nc-icon nc-bell-55",
-        });
       })
-      .finally(() => {
-        setIsLoading(true);
-      });
+      .catch(error => console.log('error', error));
+
   };
 
   return (
@@ -253,16 +271,11 @@ const CreateAdmin = () => {
                       </Col>
                       <Col md="6">
                         <Button className="btn-block" color="primary">
-                          {isLoading ? (
-                            <Loader
-                              type="Bars"
-                              color="#fff"
-                              height={22}
-                              width={22}
-                            />
-                          ) : (
-                            "Create Admin"
+                          {isLoading && (
+                              <Spinner name='circle' color="#ffffff" fadeIn="none" className="button-loader"/>
                           )}
+
+                          Create Admin
                         </Button>
                       </Col>
                     </Row>

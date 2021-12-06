@@ -21,7 +21,7 @@ import React from "react";
 // reactstrap components
 import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 
-function Icons() {
+function Hospitals() {
   return (
     <>
       <div className="content">
@@ -551,4 +551,4 @@ function Icons() {
   );
 }
 
-export default Icons;
+export default Hospitals;

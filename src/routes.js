@@ -17,12 +17,11 @@
 
 */
 import Dashboard from "views/Dashboard.js";
-import Notifications from "views/Notifications.js";
-import Icons from "views/Icons.js";
-import Typography from "views/Typography.js";
-import TableList from "views/Tables.js";
-import Maps from "views/Map.js";
-import UserPage from "views/User.js";
+import Channels from "views/Channels.js";
+
+import Orders from "views/Orders.js";
+import Plans from "views/Plans.js";
+import Insurers from "views/Insurers.js";
 import UpgradeToPro from "views/Upgrade.js";
 
 // auth
@@ -31,9 +30,14 @@ import Signin from "views/auths/Signin";
 // admins
 import Admins from "views/admins/Admins";
 import AdminsCreateAdmin from "views/admins/CreateAdmin";
+import PlanDetails from "views/sections/plans/planDetails";
+import CreatePlan from "views/sections/plans/createPlan";
+import insurerDetails from "views/sections/insurers/insurerDetails";
+import OrderDetails from "views/sections/orders/orderDetails";
+import CreateAdmin from "views/admins/CreateAdmin";
 
 // plans
-import Plans from "views/plans/Plans";
+// import Plans from "views/plans/Plans";
 
 var routes = [
   {
@@ -43,39 +47,39 @@ var routes = [
     component: Dashboard,
     layout: "/admin",
   },
+  // {
+  //   path: "/hospitals",
+  //   name: "Hospitals",
+  //   icon: "nc-icon nc-shop",
+  //   component: Hospitals,
+  //   layout: "/admin",
+  // },
   {
-    path: "/icons",
-    name: "Icons",
-    icon: "nc-icon nc-diamond",
-    component: Icons,
+    path: "/plans",
+    name: "Plans",
+    icon: "nc-icon nc-paper",
+    component: Plans,
     layout: "/admin",
   },
   {
-    path: "/maps",
-    name: "Maps",
-    icon: "nc-icon nc-pin-3",
-    component: Maps,
+    path: "/channels",
+    name: "Channels",
+    icon: "nc-icon nc-sound-wave",
+    component: Channels,
     layout: "/admin",
   },
   {
-    path: "/notifications",
-    name: "Notifications",
-    icon: "nc-icon nc-bell-55",
-    component: Notifications,
+    path: "/insurers",
+    name: "Insurers",
+    icon: "nc-icon nc-tag-content",
+    component: Insurers,
     layout: "/admin",
   },
   {
-    path: "/user-page",
-    name: "User Profile",
-    icon: "nc-icon nc-single-02",
-    component: UserPage,
-    layout: "/admin",
-  },
-  {
-    path: "/tables",
-    name: "Table List",
+    path: "/orders",
+    name: "Orders",
     icon: "nc-icon nc-tile-56",
-    component: TableList,
+    component: Orders,
     layout: "/admin",
   },
   {
@@ -86,22 +90,75 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/admins-create",
-    name: "Create New Admin",
+    path: "/create-admin",
+    name: "Create Admin",
     icon: "nc-icon nc-circle-10",
+    component: CreateAdmin,
+    layout: "/admin",
+    display: true
+  },
+  {
+    path: "/ussd-logs",
+    name: "USSD Logs",
+    icon: "nc-icon nc-single-copy-04",
     component: AdminsCreateAdmin,
+    layout: "/admin",
+  },
+  {
+    path: "/entities",
+    name: "Entities",
+    icon: "nc-icon nc-palette",
+    component: AdminsCreateAdmin,
+    layout: "/admin",
+  },
+  {
+    path: "/logout",
+    name: "Logout",
+    icon: "nc-icon nc-settings-gear-65",
+    component: AdminsCreateAdmin,
+    layout: "/admin",
+  },
+  {
+    path: "/plans/:id",
+    name: "Plan Details",
+    icon: "nc-icon nc-pallete",
+    component: PlanDetails,
+    layout: "/admin",
+    display: true,
+  },
+  {
+    path: "/create-plan",
+    name: "Create Plan",
+    icon: "nc-icon nc-pallete",
+    component: CreatePlan,
+    layout: "/admin",
+    display: true,
+  },
+  {
+    path: "/insurers/:id",
+    name: "Insurer Details",
+    icon: "nc-icon nc-pallete",
+    component: insurerDetails,
+    layout: "/admin",
+    display: true,
+  },
+  {
+    path: "/orders/:id",
+    name: "Order Details",
+    icon: "nc-icon nc-pallete",
+    component: OrderDetails,
     layout: "/admin",
     display: true,
   },
 
   // plans
-  {
-    path: "/plans",
-    name: "All Plans",
-    icon: "nc-icon nc-tile-56",
-    component: Plans,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/plans",
+  //   name: "All Plans",
+  //   icon: "nc-icon nc-tile-56",
+  //   component: Plans,
+  //   layout: "/admin",
+  // },
 
   // auth 
   {

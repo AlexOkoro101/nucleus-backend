@@ -205,3 +205,52 @@
   outline: none;
   display: none;
 }
+.plans-row {
+  cursor: pointer;
+  
+}
+.plans-row:hover {
+  background-color: #e7c5f8;
+}
+.plan-active {
+  background-color: aquamarine;
+  padding: 4px 10px;
+  border-radius: 5px;
+  color: #000;
+}
+
+.plan-inactive {
+  background-color: rgb(206, 57, 57);
+  padding: 4px 10px;
+  border-radius: 5px;
+  color: #000;
+}
+.plan-select {
+  padding: 10px;
+  background-color: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    color: #66615b;
+    line-height: normal;
+    font-size: 14px;
+    transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    box-shadow: none;
+    width: 100%;
+}
+.button-loader {
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: -5px;
+}
+.provider-table {
+  height: 400px;
+}
+.api-button {
+  padding: 4px 12px;
+  font-size: 12px;
+  text-transform: lowercase;
+  font-weight: 400;
+}
+.font-bold {
+  font-weight: 600;
+}
