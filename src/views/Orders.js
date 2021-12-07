@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router";
 // reactstrap components
-import { Card, CardHeader, CardBody, Row, Col, Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input } from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col, Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Badge } from "reactstrap";
 import { enviroment } from "variables/enviroment";
 import NotificationAlert from "react-notification-alert";
 
@@ -27,6 +27,12 @@ function Orders() {
       getToken()
     }
   }, [])
+
+  useEffect(() => {
+    const item = document.getElementsByClassName('table-responsive')
+    item[0]?.classList.add('provider-table')
+  }, [orders])
+
 
   const getToken = () => {
     const user = localStorage.getItem("user");
@@ -109,7 +115,13 @@ function Orders() {
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>N{order.order_amount}</td>
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.order_channel}</td>
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.order_type}</td>
-                            <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.order_status == 1 ? 'Active' : "Inactive"}</td>
+                            <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>
+                            {order.order_status == "paid" ? (
+                              <Badge color="success">{order.order_status}</Badge>
+                            ) : (
+                              <Badge>{order.order_status}</Badge>
+                            )}
+                            </td>
                             <td className="text-right"> 
                               {new Date(order.create_time).toLocaleDateString("en-NG",
                                   {

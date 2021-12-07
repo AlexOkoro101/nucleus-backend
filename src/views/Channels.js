@@ -194,7 +194,16 @@ function Channels() {
                             <td>{channel.channel_type}</td>
                             <td>{channel.channel_link || "N/A"}</td>
                             <td>{channel.channel_email || "N/A"}</td>
-                            <td className="text-right"> {channel.create_time}</td>
+                            <td className="text-right"> 
+                            
+                              {new Date(channel.create_time).toLocaleDateString("en-NG",
+                                  {
+                                      year: "numeric",
+                                      day: "numeric",
+                                      month: "long",
+                                  }
+                              )} 
+                            </td>
                           </tr>
 
                         ))}

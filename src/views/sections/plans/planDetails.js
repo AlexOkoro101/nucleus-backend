@@ -49,9 +49,9 @@ function PlanDetails() {
 
       useEffect(() => {
           const item = document.getElementsByClassName('table-responsive')
-          console.log(item[0])
           item[0]?.classList.add('provider-table')
-      }, [])
+      }, [planDetail])
+      
 
       const getToken = () => {
         const user = localStorage.getItem("user");

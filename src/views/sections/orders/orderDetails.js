@@ -5,6 +5,7 @@ import { Card, CardHeader, CardBody, CardFooter, Row, Col,  Button,
     Form,
     Input,
     Table,
+    Badge,
     } from "reactstrap";
 import {useParams} from 'react-router-dom';
 import {enviroment} from '../../../variables/enviroment';
@@ -127,7 +128,11 @@ function OrderDetails() {
                                     </td>
                                     <td>
                                         <span className="font-bold">Status</span><br />
-                                        {orderDetail.order_status || "N/A"}
+                                        {orderDetail.order_status == "paid" ? (
+                                            <Badge color="success">{orderDetail.order_status}</Badge>
+                                            ) : (
+                                            <Badge>{orderDetail.order_status}</Badge>
+                                        )}
                                     </td>
                                     <td>
                                         <span className="font-bold">Type</span><br />

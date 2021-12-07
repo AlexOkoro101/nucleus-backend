@@ -22,7 +22,6 @@ import Channels from "views/Channels.js";
 import Orders from "views/Orders.js";
 import Plans from "views/Plans.js";
 import Insurers from "views/Insurers.js";
-import UpgradeToPro from "views/Upgrade.js";
 
 // auth
 import Signin from "views/auths/Signin";
@@ -35,6 +34,8 @@ import CreatePlan from "views/sections/plans/createPlan";
 import insurerDetails from "views/sections/insurers/insurerDetails";
 import OrderDetails from "views/sections/orders/orderDetails";
 import CreateAdmin from "views/admins/CreateAdmin";
+import USSDLogs from "views/USSDLogs";
+import EntityLogs from "views/EntityLogs";
 
 // plans
 // import Plans from "views/plans/Plans";
@@ -101,14 +102,14 @@ var routes = [
     path: "/ussd-logs",
     name: "USSD Logs",
     icon: "nc-icon nc-single-copy-04",
-    component: AdminsCreateAdmin,
+    component: USSDLogs,
     layout: "/admin",
   },
   {
     path: "/entities",
     name: "Entities",
     icon: "nc-icon nc-palette",
-    component: AdminsCreateAdmin,
+    component: EntityLogs,
     layout: "/admin",
   },
   {
