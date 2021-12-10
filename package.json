@@ -22,6 +22,7 @@
     "react-loader-spinner": "^4.0.0",
     "react-moment": "^1.1.1",
     "react-notification-alert": "0.0.13",
+    "react-paginate": "^8.1.0",
     "react-redux": "^7.2.6",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",

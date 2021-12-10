@@ -9,7 +9,7 @@ function USSDLogs() {
   const notificationAlert = useRef();
   var Spinner = require('react-spinkit');
   const [token, settoken] = useState(null)
-  const [entities, setentities] = useState(null)
+  const [ussds, setussds] = useState(null)
   const [isLoading, setisLoading] = useState(false)
   const [modalIsLoading, setmodalIsLoading] = useState(false)
   const [error, seterror] = useState(null)
@@ -23,7 +23,7 @@ function USSDLogs() {
   useEffect(() => {
     const item = document.getElementsByClassName('table-responsive')
     item[0]?.classList.add('provider-table')
-  }, [entities])
+  }, [ussds])
 
 
   useEffect(() => {
@@ -42,12 +42,12 @@ function USSDLogs() {
 
     if(formatItem?.token) {
       settoken(formatItem?.token)
-      getEntities(formatItem?.token)
+      getUSSDs(formatItem?.token)
     }
   }
 
 
-  const getEntities = (token) => {
+  const getUSSDs = (token) => {
     setisLoading(true)
     seterror(null)
 
@@ -60,7 +60,7 @@ function USSDLogs() {
       redirect: 'follow'
     };
 
-    fetch(enviroment.BASE_URL + "backend/entities", requestOptions)
+    fetch(enviroment.BASE_URL + "backend/ussd-logs", requestOptions)
       .then(response => {
         setisLoading(false)
         return response.text()
@@ -68,7 +68,7 @@ function USSDLogs() {
       .then(result => {
         const item = JSON.parse(result)
         console.log(item)
-        setentities(item.data.data)
+        setussds(item.data.data)
       })
       .catch(error => {
         seterror(error)
@@ -76,70 +76,7 @@ function USSDLogs() {
       });
   }
 
-  // const showModal = (id) => {
-  //   setmodal(true)
-  //   setplanId(id)
 
-
-    
-  // }
-
-  // const submitHospital = () => {
-  //   setmodalIsLoading(true)
-  //   seterror(null)
-
-
-  //   var myHeaders = new Headers();
-  //   myHeaders.append("Accept", "application/json");
-  //   myHeaders.append("Authorization", `Bearer ${token}`);
-
-  //   var formdata = new FormData();
-  //   formdata.append("file", file[0], file[0].name);
-  //   formdata.append("plan", planId);
-
-  //   var requestOptions = {
-  //     method: 'POST',
-  //     headers: myHeaders,
-  //     body: formdata,
-  //     redirect: 'follow'
-  //   };
-
-  //   fetch(enviroment.BASE_URL + "backend/hospitals", requestOptions)
-  //     .then(response => {
-  //       setmodalIsLoading(false)
-  //       return response.text()
-  //     })
-  //     .then(result => {
-  //       console.log("hospital", result)
-  //       const item = JSON.parse(result)
-
-  //       if(item?.status == true) {
-  //         setmodal(!modal)
-  //         notificationAlert.current.notificationAlert({
-  //           place: "tr",
-  //           message: (
-  //             <div>
-  //               <div>Upload Successful.</div>
-  //             </div>
-  //           ),
-  //           type: "success",
-  //           icon: "nc-icon nc-bell-55",
-  //         });
-  //       } else if(item?.message) {
-  //         notificationAlert.current.notificationAlert({
-  //           place: "tr",
-  //           message: (
-  //             <div>
-  //               <div>Upload failed. file is invalid!</div>
-  //             </div>
-  //           ),
-  //           type: "danger",
-  //           icon: "nc-icon nc-bell-55",
-  //         });
-  //       }
-  //     })
-  //     .catch(error => console.log('error', error));
-  // }
 
 
   return (
@@ -152,7 +89,7 @@ function USSDLogs() {
               <Spinner name='circle' color="#663391" fadeIn="none" />
             )}
 
-            {entities && (
+            {ussds && (
               <>
                 <div className="text-right">
                   <Button
@@ -169,34 +106,40 @@ function USSDLogs() {
                   <Table responsive>
                       <thead className="text-primary">
                         <tr>
-                          <th>Photo</th>
-                          <th>Name</th>
-                          <th>Sex</th>
-                          <th>DOB</th>
-                          <th>Address</th>
-                          <th>Phone</th>
-                          <th>Email</th>
-                          <th>Hospital</th>
-                          <th>Individual</th>
+                          <th>Session ID</th>
+                          <th>Order Ref</th>
+                          <th>MSISDN</th>
+                          <th>Entry code</th>
+                          <th>Date</th>
+                          <th>Operation</th>
+                          <th>Last Step</th>
+                          <th>Completed</th>
                           <th className="text-right">Date created</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {entities?.slice(0).reverse().map((entity) => (
-                          <tr key={entity.entity_id} className="plans-row" onClick={() => {history.push('/admin/plans/' + entity.entity_id)}}>
+                        {ussds?.slice(0).reverse().map((ussd) => (
+                          <tr key={ussd.id} className="plans-row">
                             <td>
-                              <img src={entity.entity_photo} alt="" width="50" />
+                              {ussd.session_id}
                             </td>
-                            <td >{entity.entity_firstname} {entity.entity_lastname}</td>
-                            <td>{entity.entity_sex}</td>
-                            <td>{entity.entity_dob}</td>
-                            <td>{entity.entity_address}</td>
-                            <td>{entity.entity_phone}</td>
-                            <td>{entity.entity_email}</td>
-                            <td>{entity.entity_hospital}</td>
-                            <td>{entity.entity_type}</td>
+                            <td >{ussd.order_ref}</td>
+                            <td>{ussd.msisdn}</td>
+                            <td>{ussd.entry_code}</td>
+                            <td>
+                              {new Date(ussd.date).toLocaleDateString("en-NG",
+                                    {
+                                        year: "numeric",
+                                        day: "numeric",
+                                        month: "long",
+                                    }
+                                )}
+                            </td>
+                            <td>{ussd.operation || "N/A"}</td>
+                            <td>{ussd.last_step}</td>
+                            <td>{ussd.completed ? "True" : "False"}</td>
                             <td className="text-right"> 
-                              {new Date(entity.create_time).toLocaleDateString("en-NG",
+                              {new Date(ussd.create_time).toLocaleDateString("en-NG",
                                   {
                                       year: "numeric",
                                       day: "numeric",
@@ -215,36 +158,6 @@ function USSDLogs() {
               </>
 
             )}
-            <Modal
-              isOpen={modal}
-            >
-              <ModalHeader toggle={() => setmodal(!modal)}>
-                Add Hospital
-              </ModalHeader>
-              <ModalBody>
-                <Input
-                  id="hospital-file"
-                  name="file"
-                  type="file"
-                  onChange={(e) => setfile(e.target.files)}
-                />
-              </ModalBody>
-              <ModalFooter>
-                <Button
-                  color="primary"
-                  // onClick={submitHospital}
-                >
-                  {modalIsLoading && (
-                    <Spinner name='circle' color="#ffffff" fadeIn="none" className="button-loader" />
-                  )}
-                  Submit
-                </Button>
-                {' '}
-                <Button onClick={() => setmodal(!modal)}>
-                  Cancel
-                </Button>
-              </ModalFooter>
-            </Modal>
           </Col>
         </Row>
       </div>

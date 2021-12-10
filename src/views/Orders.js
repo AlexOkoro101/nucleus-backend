@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router";
 // reactstrap components
-import { Card, CardHeader, CardBody, Row, Col, Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Badge } from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col, Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Badge, Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import { enviroment } from "variables/enviroment";
 import NotificationAlert from "react-notification-alert";
+import ReactPaginate from 'react-paginate'
 
 function Orders() {
   const notificationAlert = useRef();
@@ -18,6 +19,9 @@ function Orders() {
 
   //Route hook
   const history = useHistory()
+
+  const [pageCount, setpageCount] = useState(0)
+  const [totalPage, settotalPage] = useState(0)
 
 
 
@@ -61,7 +65,38 @@ function Orders() {
       redirect: 'follow'
     };
 
-    fetch(enviroment.BASE_URL + "backend/orders?ref&channel&processed", requestOptions)
+    fetch(enviroment.BASE_URL + `backend/orders`, requestOptions)
+      .then(response => {
+        setisLoading(false)
+        return response.text()
+      })
+      .then(result => {
+        const item = JSON.parse(result)
+        console.log(item)
+        setorders(item.data.data)
+        setpageCount(item.data.current_page)
+        settotalPage(item.data.last_page)
+      })
+      .catch(error => {
+        seterror(error)
+        console.log('error', error)
+      });
+  }
+
+  const fetchOrders = (currentPage) => {
+    setisLoading(true)
+    seterror(null)
+
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    fetch(enviroment.BASE_URL + `backend/orders?page=${currentPage}`, requestOptions)
       .then(response => {
         setisLoading(false)
         return response.text()
@@ -78,6 +113,13 @@ function Orders() {
   }
 
 
+  const handlePageChange = (data) => {
+    console.log(data.selected)
+
+    let currentPage = data.selected + 1
+
+    fetchOrders(currentPage)
+  }
 
 
 
@@ -139,9 +181,24 @@ function Orders() {
                     </Table>
                   </CardBody>
                 </Card>
+                <ReactPaginate
+                  previousLabel={'previous'}
+                  nextLabel={'next'}
+                  pageCount={totalPage}
+                  onPageChange={handlePageChange}
+                  containerClassName={'pagination justify-content-center'}
+                  pageClassName={'page-item'}
+                  pageLinkClassName={'page-link'}
+                  previousClassName={'page-item'}
+                  nextClassName={'page-item'}
+                  nextLinkClassName={'page-link'}
+                  previousLinkClassName={'page-link'}
+                  activeClassName={'active'}
+                ></ReactPaginate>
               </>
 
             )}
+            
             
           </Col>
         </Row>

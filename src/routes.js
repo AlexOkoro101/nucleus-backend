@@ -36,6 +36,7 @@ import OrderDetails from "views/sections/orders/orderDetails";
 import CreateAdmin from "views/admins/CreateAdmin";
 import USSDLogs from "views/USSDLogs";
 import EntityLogs from "views/EntityLogs";
+import Transactions from "views/Transactions";
 
 // plans
 // import Plans from "views/plans/Plans";
@@ -110,6 +111,13 @@ var routes = [
     name: "Entities",
     icon: "nc-icon nc-palette",
     component: EntityLogs,
+    layout: "/admin",
+  },
+  {
+    path: "/transactions",
+    name: "Transactions",
+    icon: "nc-icon nc-single-copy-04",
+    component: Transactions,
     layout: "/admin",
   },
   {
