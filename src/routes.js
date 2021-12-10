@@ -19,6 +19,7 @@ import CreateAdmin from "views/admins/CreateAdmin";
 import USSDLogs from "views/USSDLogs";
 import EntityLogs from "views/EntityLogs";
 import Transactions from "views/Transactions";
+import Logout from "views/Logout";
 
 // plans
 // import Plans from "views/plans/Plans";
@@ -106,7 +107,7 @@ var routes = [
     path: "/logout",
     name: "Logout",
     icon: "nc-icon nc-settings-gear-65",
-    component: AdminsCreateAdmin,
+    component: Logout,
     layout: "/admin",
   },
   {
