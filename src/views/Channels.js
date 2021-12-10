@@ -114,7 +114,7 @@ function Channels() {
         console.log("hospital", result)
         const item = JSON.parse(result)
 
-        if(item?.status == true) {
+        if(item?.status === true) {
           setmodal(!modal)
           notificationAlert.current.notificationAlert({
             place: "tr",

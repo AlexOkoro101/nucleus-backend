@@ -158,7 +158,7 @@ function Orders() {
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.order_channel}</td>
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.order_type}</td>
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>
-                            {order.order_status == "paid" ? (
+                            {order.order_status === "paid" ? (
                               <Badge color="success">{order.order_status}</Badge>
                             ) : (
                               <Badge>{order.order_status}</Badge>
