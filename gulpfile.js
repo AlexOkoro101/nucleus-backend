@@ -14,10 +14,7 @@ gulp.task("licenses", async function () {
   gulp
     .src("build/index.html", { base: "./" })
     .pipe(
-      gap.prependText(`<!--
-
-
--->`)
+      gap.prependText(`/**/`)
     )
     .pipe(gulp.dest("./", { overwrite: true }));
 
