@@ -118,7 +118,7 @@ function Insurers() {
         console.log("insurer", result)
         const item = JSON.parse(result)
 
-        if(item?.status == true) {
+        if(item?.status === true) {
           setmodal(!modal)
           notificationAlert.current.notificationAlert({
             place: "tr",
@@ -189,7 +189,7 @@ function Insurers() {
                             <td onClick={() => {history.push('/admin/insurers/' + insurer.insurer_id)}}>{insurer.insurer_address}</td>
                             <td onClick={() => {history.push('/admin/insurers/' + insurer.insurer_id)}}>{insurer.insurer_phone}</td>
                             <td onClick={() => {history.push('/admin/insurers/' + insurer.insurer_id)}}>{insurer.insurer_email}</td>
-                            <td onClick={() => {history.push('/admin/insurers/' + insurer.insurer_id)}}>{insurer.insurer_status == 1 ? 'Active' : "Inactive"}</td>
+                            <td onClick={() => {history.push('/admin/insurers/' + insurer.insurer_id)}}>{insurer.insurer_status === 1 ? 'Active' : "Inactive"}</td>
                             <td onClick={() => {history.push('/admin/insurers/' + insurer.insurer_id)}} className="text-right">
                               {new Date(insurer.create_time).toLocaleDateString("en-NG",
                                   {

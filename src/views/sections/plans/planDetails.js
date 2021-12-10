@@ -475,7 +475,7 @@ function PlanDetails() {
                                 <td>{provider.name}</td>
                                 <td>{provider.location}</td>
                                 <td>{provider.address}</td>
-                                <td>{provider.status == 1 ? 'Active' : "Inactive"}</td>
+                                <td>{provider.status === 1 ? 'Active' : "Inactive"}</td>
                             </tr>
 
                             ))}

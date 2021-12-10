@@ -128,7 +128,7 @@ function OrderDetails() {
                                     </td>
                                     <td>
                                         <span className="font-bold">Status</span><br />
-                                        {orderDetail.order_status == "paid" ? (
+                                        {orderDetail.order_status === "paid" ? (
                                             <Badge color="success">{orderDetail.order_status}</Badge>
                                             ) : (
                                             <Badge>{orderDetail.order_status}</Badge>
@@ -267,7 +267,7 @@ function OrderDetails() {
                                     <tr>
                                         <td>
                                             <span className="font-bold">Condition</span><br />
-                                            {customer.entity_condition == "1" ? "True" : "False"}
+                                            {customer.entity_condition === "1" ? "True" : "False"}
                                         </td>
                                         <td>
                                             <span className="font-bold">Type</span><br />

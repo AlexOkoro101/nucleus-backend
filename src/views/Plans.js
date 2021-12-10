@@ -22,7 +22,6 @@ function Plans() {
 
   useEffect(() => {
     const item = document.getElementsByClassName('table-responsive')
-    console.log(item[0])
     item[0]?.classList.add('provider-table')
   }, [plans])
 
@@ -114,7 +113,7 @@ function Plans() {
         console.log("hospital", result)
         const item = JSON.parse(result)
 
-        if(item?.status == true) {
+        if(item?.status === true) {
           setmodal(!modal)
           notificationAlert.current.notificationAlert({
             place: "tr",
@@ -183,7 +182,7 @@ function Plans() {
                             <td onClick={() => {history.push('/admin/plans/' + plan.plan_id)}}>{plan.plan_name}</td>
                             <td onClick={() => {history.push('/admin/plans/' + plan.plan_id)}}>{plan.plan_tenure}</td>
                             <td onClick={() => {history.push('/admin/plans/' + plan.plan_id)}}>N{plan.plan_amount}</td>
-                            <td onClick={() => {history.push('/admin/plans/' + plan.plan_id)}}>{plan.plan_status == 1 ? 'Active' : "Inactive"}</td>
+                            <td onClick={() => {history.push('/admin/plans/' + plan.plan_id)}}>{plan.plan_status === 1 ? 'Active' : "Inactive"}</td>
                             <td className="text-right"> <Button color="info" onClick={() => showModal(plan.plan_id)}>Add Hospital</Button></td>
                           </tr>
 
