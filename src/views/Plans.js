@@ -171,6 +171,7 @@ function Plans() {
                         <tr>
                           <th>Name</th>
                           <th>Tenure</th>
+                          <th>Category</th>
                           <th>Amount</th>
                           <th>Status</th>
                           <th className="text-right">Action</th>
@@ -181,6 +182,7 @@ function Plans() {
                           <tr key={plan.plan_id} className="plans-row">
                             <td onClick={() => {history.push('/admin/plans/' + plan.plan_id)}}>{plan.plan_name}</td>
                             <td onClick={() => {history.push('/admin/plans/' + plan.plan_id)}}>{plan.plan_tenure}</td>
+                            <td onClick={() => {history.push('/admin/plans/' + plan.plan_id)}}>{plan.plan_category}</td>
                             <td onClick={() => {history.push('/admin/plans/' + plan.plan_id)}}>N{plan.plan_amount}</td>
                             <td onClick={() => {history.push('/admin/plans/' + plan.plan_id)}}>{plan.plan_status === 1 ? 'Active' : "Inactive"}</td>
                             <td className="text-right"> <Button color="info" onClick={() => showModal(plan.plan_id)}>Add Hospital</Button></td>
