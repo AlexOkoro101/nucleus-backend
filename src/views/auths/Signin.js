@@ -27,8 +27,8 @@ const Signin = () => {
 
 
   const notificationAlert = React.useRef();
-  const [email, setEmail] = useState("francis@nucleus.com.ng");
-  const [password, setPassword] = useState("080665");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const history = useHistory(); // redirect 
