@@ -247,10 +247,10 @@ function CreatePlan() {
                                     value={category}
                                     onChange={(e) => setcategory(e.target.value)}
                                     >
-                                        <option value="Individual">Individual</option>
-                                        <option value="Family">Family</option>
+                                        <option value="INDIVIDUAL">Individual</option>
+                                        <option value="FAMILY">Family</option>
                                         <option value="SME">SME</option>
-                                        <option value="Elderly">Elderly</option>
+                                        <option value="ELDERLY">Elderly</option>
                                     </select>
                                 </FormGroup>
                                 </Col>

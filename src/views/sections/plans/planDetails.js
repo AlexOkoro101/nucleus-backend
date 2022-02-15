@@ -24,11 +24,11 @@ function PlanDetails() {
 
     const [name, setname] = useState("")
     const [amount, setamount] = useState("")
-    const [tenure, settenure] = useState("15 Months")
-    const [insurer, setinsurer] = useState("3")
+    const [tenure, settenure] = useState("12 Months")
+    const [insurer, setinsurer] = useState(0)
     const [website, setwebsite] = useState("")
     const [status, setstatus] = useState("1")
-    const [category, setcategory] = useState("Individual")
+    const [category, setcategory] = useState("INDIVIDUAL")
     const [generalConsultation, setgeneralConsultation] = useState(false)
     const [glasses, setglasses] = useState(false)
     const [specialConsultation, setspecialConsultation] = useState(false)
@@ -354,10 +354,10 @@ function PlanDetails() {
                                 value={category}
                                 onChange={(e) => setcategory(e.target.value)}
                                 >
-                                    <option value="Individual">Individual</option>
-                                    <option value="Family">Family</option>
+                                    <option value="INDIVIDUAL">Individual</option>
+                                    <option value="FAMILY">Family</option>
                                     <option value="SME">SME</option>
-                                    <option value="Elderly">Elderly</option>
+                                    <option value="ELDERLY">Elderly</option>
                                 </select>
                             </FormGroup>
                             </Col>
