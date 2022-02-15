@@ -79,15 +79,11 @@ function Plans() {
   const showModal = (id) => {
     setmodal(true)
     setplanId(id)
-
-
-    
   }
 
   const submitHospital = () => {
     setmodalIsLoading(true)
     seterror(null)
-
 
     var myHeaders = new Headers();
     myHeaders.append("Accept", "application/json");

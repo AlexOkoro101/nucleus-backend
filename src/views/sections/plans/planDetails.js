@@ -24,11 +24,11 @@ function PlanDetails() {
 
     const [name, setname] = useState("")
     const [amount, setamount] = useState("")
-    const [tenure, settenure] = useState("15 Months")
-    const [insurer, setinsurer] = useState("3")
+    const [tenure, settenure] = useState("12 Months")
+    const [insurer, setinsurer] = useState(0)
     const [website, setwebsite] = useState("")
     const [status, setstatus] = useState("1")
-    const [category, setcategory] = useState("Individual")
+    const [category, setcategory] = useState("INDIVIDUAL")
     const [generalConsultation, setgeneralConsultation] = useState(false)
     const [glasses, setglasses] = useState(false)
     const [specialConsultation, setspecialConsultation] = useState(false)
@@ -179,10 +179,10 @@ function PlanDetails() {
         var raw = JSON.stringify(updateObj);
 
         var requestOptions = {
-        method: 'PUT',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
+            method: 'PUT',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
         };
 
         fetch(enviroment.BASE_URL + "backend/plans/" + planDetail.plan_id, requestOptions)
@@ -370,7 +370,7 @@ function PlanDetails() {
                             <Col md="6" className="px-5">
                             <FormGroup>
                                 <Input type="checkbox"  onChange={() => {setgeneralConsultation(!generalConsultation)}} checked={generalConsultation}/>
-                                <label>General Consulation</label>
+                                <label>General Consultation</label>
                             </FormGroup>
                             </Col>
 
