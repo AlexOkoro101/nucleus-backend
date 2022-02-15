@@ -131,17 +131,17 @@ function PlanDetails() {
         setinsurer(data.plan_insurer)
         setwebsite(data.plan_website)
         setstatus(data.plan_status)
-        setcategory(data.plan_category == null && "Individual")
-        setgeneralConsultation(data.plan_general_consultation == null && false)
-        setglasses(data.plan_glasses == null && false)
-        setspecialConsultation(data.plan_special_consultation == null && false)
-        setpaedetrics(data.plan_paedetrics == null && false)
-        setadmission(data.plan_admission == null && false)
-        setmentalCare(data.plan_mental_care == null && false)
-        setfertilityCare(data.plan_fertility_care == null && false)
-        setantenatalCare(data.plan_antenatal_care == null && false)
-        setopticalCare(data.plan_optical_care == null && false)
-        setdentalCare(data.plan_dental_care == null && false)
+        setcategory(data.plan_category === null && "Individual")
+        setgeneralConsultation(data.plan_general_consultation === null && false)
+        setglasses(data.plan_glasses === null && false)
+        setspecialConsultation(data.plan_special_consultation === null && false)
+        setpaedetrics(data.plan_paedetrics === null && false)
+        setadmission(data.plan_admission === null && false)
+        setmentalCare(data.plan_mental_care === null && false)
+        setfertilityCare(data.plan_fertility_care === null && false)
+        setantenatalCare(data.plan_antenatal_care === null && false)
+        setopticalCare(data.plan_optical_care === null && false)
+        setdentalCare(data.plan_dental_care === null && false)
         
     }
 
@@ -178,10 +178,10 @@ function PlanDetails() {
         var raw = JSON.stringify(updateObj);
 
         var requestOptions = {
-        method: 'PUT',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
+            method: 'PUT',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
         };
 
         fetch(enviroment.BASE_URL + "backend/plans/" + planDetail.plan_id, requestOptions)
@@ -369,7 +369,7 @@ function PlanDetails() {
                             <Col md="6" className="px-5">
                             <FormGroup>
                                 <Input type="checkbox"  onChange={() => {setgeneralConsultation(!generalConsultation)}} checked={generalConsultation}/>
-                                <label>General Consulation</label>
+                                <label>General Consultation</label>
                             </FormGroup>
                             </Col>
 
