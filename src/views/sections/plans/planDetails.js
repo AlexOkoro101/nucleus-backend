@@ -131,18 +131,18 @@ function PlanDetails() {
         setinsurer(data.plan_insurer)
         setwebsite(data.plan_website)
         setstatus(data.plan_status)
-        setcategory(data.plan_category == null && "Individual")
-        setgeneralConsultation(data.plan_general_consultation == null && false)
-        setglasses(data.plan_glasses == null && false)
-        setspecialConsultation(data.plan_special_consultation == null && false)
-        setpaedetrics(data.plan_paedetrics == null && false)
-        setadmission(data.plan_admission == null && false)
-        setmentalCare(data.plan_mental_care == null && false)
-        setfertilityCare(data.plan_fertility_care == null && false)
-        setantenatalCare(data.plan_antenatal_care == null && false)
-        setopticalCare(data.plan_optical_care == null && false)
-        setdentalCare(data.plan_dental_care == null && false)
-        
+        setcategory(data.plan_category || "INDIVIDUAL")
+        setgeneralConsultation(data.plan_general_consultation || false)
+        setglasses(data.plan_glasses || false)
+        setspecialConsultation(data.plan_special_consultation || false)
+        setpaedetrics(data.plan_paedetrics || false)
+        setadmission(data.plan_admission || false)
+        setmentalCare(data.plan_mental_care || false)
+        setfertilityCare(data.plan_fertility_care || false)
+        setantenatalCare(data.plan_antenatal_care || false)
+        setopticalCare(data.plan_optical_care || false)
+        setdentalCare(data.plan_dental_care || false)
+
     }
 
     const updatePlan = () => {
@@ -170,6 +170,7 @@ function PlanDetails() {
                 dental_care: dentalCare
             }
         }
+        // console.log(updateObj)
 
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -354,10 +355,10 @@ function PlanDetails() {
                                 value={category}
                                 onChange={(e) => setcategory(e.target.value)}
                                 >
-                                    <option value="Individual">Individual</option>
-                                    <option value="Family">Family</option>
+                                    <option value="INDIVIDUAL">Individual</option>
+                                    <option value="FAMILY">Family</option>
                                     <option value="SME">SME</option>
-                                    <option value="Elderly">Elderly</option>
+                                    <option value="ELDERLY">Elderly</option>
                                 </select>
                             </FormGroup>
                             </Col>
