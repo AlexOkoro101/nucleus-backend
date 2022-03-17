@@ -5,9 +5,8 @@ import { Card, CardHeader, CardBody, Row, Col, Table, Button, Modal, ModalHeader
 import { enviroment } from "variables/enviroment";
 import NotificationAlert from "react-notification-alert";
 import ReactPaginate from 'react-paginate'
-import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 
-function Orders() {
+function Corporate() {
   const notificationAlert = useRef();
   var Spinner = require('react-spinkit');
   const [token, settoken] = useState(null)
@@ -23,11 +22,6 @@ function Orders() {
 
   const [pageCount, setpageCount] = useState(0)
   const [totalPage, settotalPage] = useState(0)
-
-  //date filter
-  const [date, setdate] = useState([new Date(), new Date()]);
-  const [firstdate, setfirstdate] = useState(null)
-  const [seconddate, setseconddate] = useState(null)
 
 
 
@@ -71,7 +65,7 @@ function Orders() {
       redirect: 'follow'
     };
 
-    fetch(enviroment.BASE_URL + `backend/orders`, requestOptions)
+    fetch(enviroment.BASE_URL + `backend/corporates`, requestOptions)
       .then(response => {
         setisLoading(false)
         return response.text()
@@ -102,7 +96,7 @@ function Orders() {
       redirect: 'follow'
     };
 
-    fetch(enviroment.BASE_URL + `backend/orders?page=${currentPage}`, requestOptions)
+    fetch(enviroment.BASE_URL + `backend/corporates?page=${currentPage}`, requestOptions)
       .then(response => {
         setisLoading(false)
         return response.text()
@@ -127,66 +121,6 @@ function Orders() {
     fetchOrders(currentPage)
   }
 
-  const filterDate = (val) => {
-    setdate(val)
-
-
-    var d = new Date(val[0]),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
-
-        setfirstdate([year, month, day].join('-'));
-
-    var e = new Date(val[1]),
-        smonth = '' + (e.getMonth() + 1),
-        sday = '' + e.getDate(),
-        syear = e.getFullYear();
-
-    if (smonth.length < 2) 
-        smonth = '0' + smonth;
-    if (sday.length < 2) 
-        sday = '0' + sday;
-
-        setseconddate([syear, smonth, sday].join('-'));
-  }
-
-  const filterOrder = () => {
-    setisLoading(true)
-    seterror(null)
-
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
-
-    var requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
-
-    fetch(enviroment.BASE_URL + `backend/orders?ref&channel&processed&startDate=${firstdate}&endDate=${seconddate}`, requestOptions)
-      .then(response => {
-        setisLoading(false)
-        return response.text()
-      })
-      .then(result => {
-        const item = JSON.parse(result)
-        console.log(item)
-        setorders(item.data.data)
-        setpageCount(item.data.current_page)
-        settotalPage(item.data.last_page)
-      })
-      .catch(error => {
-        seterror(error)
-        console.log('error', error)
-      });
-  }
-
 
 
   return (
@@ -202,51 +136,32 @@ function Orders() {
             {orders && (
               <>
                 <Card>
-                <Row>
-                  <Col md="8">
-                    <CardHeader>All Orders</CardHeader>
-
-                  </Col>
-                  <Col md="4">
-                    <DateRangePicker
-                     className="filter"
-                     onChange={(val) => filterDate(val)} 
-                     value={date}
-                     clearIcon={null} 
-                     
-                    />
-                    <Button color="info" className="filter-button" onClick={filterOrder}>Filter</Button>
-                  </Col>
-
-                </Row>
+                  
+                  <CardHeader>All Corporates</CardHeader>
                   <CardBody>
                   <Table responsive>
                       <thead className="text-primary">
                         <tr>
-                          <th>Ref</th>
-                          <th>Amount</th>
-                          <th>Channel</th>
-                          <th>Type</th>
-                          <th>Status</th>
+                          <th>Corporate Name</th>
+                          <th>Address</th>
+                          <th>Email</th>
+                          <th>Phone</th>
+                          <th>Industry</th>
+                          <th>CAC Number</th>
                           <th className="text-right">Created At</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {orders?.map((order) => (
-                          <tr key={order.order_id} className="plans-row">
-                            <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.order_ref}</td>
-                            <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>N{order.order_amount}</td>
-                            <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.order_channel}</td>
-                            <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.order_type}</td>
-                            <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>
-                            {order.order_status === "paid" ? (
-                              <Badge color="success">{order.order_status}</Badge>
-                            ) : (
-                              <Badge>{order.order_status}</Badge>
-                            )}
-                            </td>
+                        {orders?.map((order, index) => (
+                          <tr key={index} className="plans-row">
+                            <td>{order.corporate_name}</td>
+                            <td>{order.corporate_address}</td>
+                            <td>{order.corporate_email}</td>
+                            <td>{order.corporate_phone || "N/A"}</td>
+                            <td>{order.corporate_industry}</td>
+                            <td>{order.corporate_cacNo || "N/A"}</td>
                             <td className="text-right"> 
-                              {new Date(order.create_time).toLocaleDateString("en-NG",
+                              {new Date(order.created).toLocaleDateString("en-NG",
                                   {
                                       year: "numeric",
                                       day: "numeric",
@@ -288,4 +203,4 @@ function Orders() {
   );
 }
 
-export default Orders;
+export default Corporate;

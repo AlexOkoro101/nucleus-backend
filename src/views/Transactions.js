@@ -4,6 +4,7 @@ import { useHistory } from "react-router";
 import { Card, CardHeader, CardBody, Row, Col, Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input } from "reactstrap";
 import { enviroment } from "variables/enviroment";
 import NotificationAlert from "react-notification-alert";
+import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 
 function Transactions() {
   const notificationAlert = useRef();
@@ -16,6 +17,11 @@ function Transactions() {
   const [modal, setmodal] = useState(false)
   const [planId, setplanId] = useState(null)
   const [file, setfile] = useState(null)
+
+  //date filter
+  const [date, setdate] = useState([new Date(), new Date()]);
+  const [firstdate, setfirstdate] = useState(null)
+  const [seconddate, setseconddate] = useState(null)
 
   //Route hook
   const history = useHistory()
@@ -76,6 +82,64 @@ function Transactions() {
       });
   }
 
+  const filterDate = (val) => {
+    setdate(val)
+
+
+    var d = new Date(val[0]),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+        setfirstdate([year, month, day].join('-'));
+
+    var e = new Date(val[1]),
+        smonth = '' + (e.getMonth() + 1),
+        sday = '' + e.getDate(),
+        syear = e.getFullYear();
+
+    if (smonth.length < 2) 
+        smonth = '0' + smonth;
+    if (sday.length < 2) 
+        sday = '0' + sday;
+
+        setseconddate([syear, smonth, sday].join('-'));
+  }
+
+  const filterOrder = () => {
+    setisLoading(true)
+    seterror(null)
+
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    fetch(enviroment.BASE_URL + `backend/transactions?startDate=${firstdate}&endDate=${seconddate}&transactionID&status &ref&verified`, requestOptions)
+      .then(response => {
+        setisLoading(false)
+        return response.text()
+      })
+      .then(result => {
+        const item = JSON.parse(result)
+        console.log(item)
+        settransactions(item.data.data)
+      })
+      .catch(error => {
+        seterror(error)
+        console.log('error', error)
+      });
+  }
+
 
 
 
@@ -101,7 +165,23 @@ function Transactions() {
                 </div>
                 <Card>
                   
-                  <CardHeader>All Transactions</CardHeader>
+                <Row>
+                  <Col md="8">
+                    <CardHeader>All Tranactions</CardHeader>
+
+                  </Col>
+                  <Col md="4">
+                    <DateRangePicker
+                     className="filter"
+                     onChange={(val) => filterDate(val)} 
+                     value={date}
+                     clearIcon={null} 
+                     
+                    />
+                    <Button color="info" className="filter-button" onClick={filterOrder}>Filter</Button>
+                  </Col>
+
+                </Row>
                   <CardBody>
                   <Table responsive>
                       <thead className="text-primary">

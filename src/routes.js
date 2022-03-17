@@ -20,6 +20,8 @@ import USSDLogs from "views/USSDLogs";
 import EntityLogs from "views/EntityLogs";
 import Transactions from "views/Transactions";
 import Logout from "views/Logout";
+import Loans from "views/Loans";
+import Corporate from "views/Corporate";
 
 // plans
 // import Plans from "views/plans/Plans";
@@ -68,6 +70,20 @@ var routes = [
     layout: "/admin",
   },
   {
+    path: "/loans",
+    name: "Loans",
+    icon: "nc-icon nc-tile-56",
+    component: Loans,
+    layout: "/admin",
+  },
+  {
+    path: "/corporates",
+    name: "Corporates",
+    icon: "nc-icon nc-tile-56",
+    component: Corporate,
+    layout: "/admin",
+  },
+  {
     path: "/admins",
     name: "Admin Management",
     icon: "nc-icon nc-circle-10",
@@ -90,8 +106,8 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/entities",
-    name: "Entities",
+    path: "/enrollees",
+    name: "Enrolless",
     icon: "nc-icon nc-palette",
     component: EntityLogs,
     layout: "/admin",

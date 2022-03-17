@@ -5,6 +5,7 @@
   "dependencies": {
     "@babel/core": "7.14.2",
     "@reduxjs/toolkit": "^1.6.2",
+    "@wojtekmaj/react-daterange-picker": "^3.4.0",
     "axios": "^0.23.0",
     "bootstrap": "4.6.0",
     "chart.js": "3.2.1",

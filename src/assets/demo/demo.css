@@ -254,3 +254,22 @@
 .font-bold {
   font-weight: 600;
 }
+.filter .react-daterange-picker__wrapper {
+  padding-bottom: 5px;
+  padding-top: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border: 1px solid #dee2e6;
+}
+
+.filter .react-daterange-picker__button:enabled:hover .react-daterange-picker__button__icon, .filter .react-daterange-picker__button:enabled:focus .react-daterange-picker__button__icon {
+  stroke: #663391;
+}
+.inline {
+  display: inline;
+}
+.filter-email {
+  border-radius: 0;
+  padding: 9px;
+  margin-right: 1px;
+}
