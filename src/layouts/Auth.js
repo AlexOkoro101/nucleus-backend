@@ -4,6 +4,7 @@ import { Route, Switch, useHistory } from "react-router-dom";
 
 const Auth = () => {
   const history = useHistory();
+  console.log(process.env.REACT_APP_BASE_URL)
 
   useEffect(() => {
     getToken()
