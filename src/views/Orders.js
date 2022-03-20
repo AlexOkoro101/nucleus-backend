@@ -236,7 +236,7 @@ function Orders() {
                           <tr key={order.order_id} className="plans-row">
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.order_ref}</td>
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>N{order.order_amount}</td>
-                            <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.order_channel}</td>
+                            <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.channel.channel_name}</td>
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.order_type}</td>
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>
                             {order.order_status === "paid" ? (
