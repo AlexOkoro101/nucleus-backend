@@ -83,7 +83,7 @@ function Dashboard() {
       .then(result => {
         setisLoading(false)
         const item = JSON.parse(result)
-        console.log(item)
+        console.log("item", item)
         setdashboard(item.data)
       })
       .catch(error => {
@@ -168,7 +168,7 @@ function Dashboard() {
                       </Col>
                       <Col md="8" xs="7">
                         <div className="numbers">
-                          <p className="card-category">Entities</p>
+                          <p className="card-category">Enrollees</p>
                           <CardTitle tag="p">{dashboard.entities.length}</CardTitle>
                           <p />
                         </div>
@@ -178,7 +178,7 @@ function Dashboard() {
                   <CardFooter>
                     <hr />
                     <div style={{cursor: "pointer"}} onClick={() => history.push('/admin/entities')} className="stats">
-                      <i  className="fas fa-sync-alt" /> View Entities
+                      <i  className="fas fa-sync-alt" /> View Enrollees
                     </div>
                   </CardFooter>
                 </Card>

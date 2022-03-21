@@ -107,7 +107,7 @@ var routes = [
   },
   {
     path: "/enrollees",
-    name: "Enrolless",
+    name: "Enrollees",
     icon: "nc-icon nc-palette",
     component: EntityLogs,
     layout: "/admin",
