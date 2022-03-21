@@ -83,7 +83,7 @@ function Dashboard() {
       .then(result => {
         setisLoading(false)
         const item = JSON.parse(result)
-        console.log(item)
+        console.log("item", item)
         setdashboard(item.data)
       })
       .catch(error => {
@@ -117,7 +117,7 @@ function Dashboard() {
                       <Col md="8" xs="7">
                         <div className="numbers">
                           <p className="card-category">Plans</p>
-                          <CardTitle tag="p">{dashboard.plans.length}</CardTitle>
+                          <CardTitle tag="p">{dashboard.planCount}</CardTitle>
                           <p />
                         </div>
                       </Col>
@@ -143,7 +143,7 @@ function Dashboard() {
                       <Col md="8" xs="7">
                         <div className="numbers">
                           <p className="card-category">Orders</p>
-                          <CardTitle tag="p">{dashboard.orders.length}</CardTitle>
+                          <CardTitle tag="p">{dashboard.orderCount}</CardTitle>
                           <p />
                         </div>
                       </Col>
@@ -168,8 +168,8 @@ function Dashboard() {
                       </Col>
                       <Col md="8" xs="7">
                         <div className="numbers">
-                          <p className="card-category">Entities</p>
-                          <CardTitle tag="p">{dashboard.entities.length}</CardTitle>
+                          <p className="card-category">Enrollees</p>
+                          <CardTitle tag="p">{dashboard.enrolloesCount}</CardTitle>
                           <p />
                         </div>
                       </Col>
@@ -178,7 +178,7 @@ function Dashboard() {
                   <CardFooter>
                     <hr />
                     <div style={{cursor: "pointer"}} onClick={() => history.push('/admin/entities')} className="stats">
-                      <i  className="fas fa-sync-alt" /> View Entities
+                      <i  className="fas fa-sync-alt" /> View Enrollees
                     </div>
                   </CardFooter>
                 </Card>
@@ -205,6 +205,112 @@ function Dashboard() {
                     <hr />
                     <div style={{cursor: "pointer"}} onClick={() => history.push('/admin/ussd-logs')} className="stats">
                       <i  className="fas fa-sync-alt" /> View USSD Logs
+                    </div>
+                  </CardFooter>
+                </Card>
+              </Col>
+            </Row>
+            <Row>
+              <Col lg="3" md="6" sm="6">
+                <Card className="card-stats">
+                  <CardBody>
+                    <Row>
+                      <Col md="4" xs="5">
+                        <div className="icon-big text-center icon-warning">
+                          <i className="nc-icon nc-globe text-warning" />
+                        </div>
+                      </Col>
+                      <Col md="8" xs="7">
+                        <div className="numbers">
+                          <p className="card-category">Loans</p>
+                          <CardTitle tag="p">{dashboard?.totalLoans}</CardTitle>
+                          <p />
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                  <CardFooter>
+                    <hr />
+                    <div style={{cursor: "pointer"}} onClick={() => history.push('/admin/loans')} className="stats">
+                      <i  className="fas fa-sync-alt" /> View Loans
+                    </div>
+                  </CardFooter>
+                </Card>
+              </Col>
+              <Col lg="3" md="6" sm="6">
+                <Card className="card-stats">
+                  <CardBody>
+                    <Row>
+                      <Col md="4" xs="5">
+                        <div className="icon-big text-center icon-warning">
+                          <i className="nc-icon nc-money-coins text-success" />
+                        </div>
+                      </Col>
+                      <Col md="8" xs="7">
+                        <div className="numbers">
+                          <p className="card-category">Loan Value</p>
+                          <CardTitle tag="p">{dashboard?.totalLoanValue}</CardTitle>
+                          <p />
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                  <CardFooter>
+                    <hr />
+                    <div style={{cursor: "pointer"}} onClick={() => history.push('/admin/loans')} className="stats">
+                      <i className="fas fa-sync-alt" /> View Loan Value
+                    </div>
+                  </CardFooter>
+                </Card>
+              </Col>
+              <Col lg="3" md="6" sm="6">
+                <Card className="card-stats">
+                  <CardBody>
+                    <Row>
+                      <Col md="4" xs="5">
+                        <div className="icon-big text-center icon-warning">
+                          <i className="nc-icon nc-vector text-danger" />
+                        </div>
+                      </Col>
+                      <Col md="8" xs="7">
+                        <div className="numbers">
+                          <p className="card-category">Corporates</p>
+                          <CardTitle tag="p">{dashboard?.corporates}</CardTitle>
+                          <p />
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                  <CardFooter>
+                    <hr />
+                    <div style={{cursor: "pointer"}} onClick={() => history.push('/admin/corporates')} className="stats">
+                      <i  className="fas fa-sync-alt" /> View Corporates
+                    </div>
+                  </CardFooter>
+                </Card>
+              </Col>
+              <Col lg="3" md="6" sm="6">
+                <Card className="card-stats">
+                  <CardBody>
+                    <Row>
+                      <Col md="4" xs="5">
+                        <div className="icon-big text-center icon-warning">
+                          <i className="nc-icon nc-favourite-28 text-primary" />
+                        </div>
+                      </Col>
+                      <Col md="8" xs="7">
+                        <div className="numbers">
+                          <p className="card-category">Revenue</p>
+                          <CardTitle tag="p">{dashboard?.revenue}</CardTitle>
+                          <p />
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                  <CardFooter>
+                    <hr />
+                    <div style={{cursor: "pointer"}} onClick={() => history.push('/admin/ussd-logs')} className="stats">
+                      {/* <i  className="fas fa-sync-alt" /> View USSD Logs */}
                     </div>
                   </CardFooter>
                 </Card>
