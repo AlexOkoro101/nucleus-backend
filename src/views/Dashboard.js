@@ -117,7 +117,7 @@ function Dashboard() {
                       <Col md="8" xs="7">
                         <div className="numbers">
                           <p className="card-category">Plans</p>
-                          <CardTitle tag="p">{dashboard.plans.length}</CardTitle>
+                          <CardTitle tag="p">{dashboard.planCount}</CardTitle>
                           <p />
                         </div>
                       </Col>
@@ -143,7 +143,7 @@ function Dashboard() {
                       <Col md="8" xs="7">
                         <div className="numbers">
                           <p className="card-category">Orders</p>
-                          <CardTitle tag="p">{dashboard.orders.length}</CardTitle>
+                          <CardTitle tag="p">{dashboard.orderCount}</CardTitle>
                           <p />
                         </div>
                       </Col>
@@ -169,7 +169,7 @@ function Dashboard() {
                       <Col md="8" xs="7">
                         <div className="numbers">
                           <p className="card-category">Enrollees</p>
-                          <CardTitle tag="p">{dashboard.entities.length}</CardTitle>
+                          <CardTitle tag="p">{dashboard.enrolloesCount}</CardTitle>
                           <p />
                         </div>
                       </Col>
@@ -223,7 +223,7 @@ function Dashboard() {
                       <Col md="8" xs="7">
                         <div className="numbers">
                           <p className="card-category">Loans</p>
-                          <CardTitle tag="p">{dashboard?.totalLoans.length}</CardTitle>
+                          <CardTitle tag="p">{dashboard?.totalLoans}</CardTitle>
                           <p />
                         </div>
                       </Col>
@@ -249,7 +249,7 @@ function Dashboard() {
                       <Col md="8" xs="7">
                         <div className="numbers">
                           <p className="card-category">Loan Value</p>
-                          <CardTitle tag="p">{dashboard?.totalLoanValue.length}</CardTitle>
+                          <CardTitle tag="p">{dashboard?.totalLoanValue}</CardTitle>
                           <p />
                         </div>
                       </Col>
@@ -275,7 +275,7 @@ function Dashboard() {
                       <Col md="8" xs="7">
                         <div className="numbers">
                           <p className="card-category">Corporates</p>
-                          <CardTitle tag="p">{dashboard?.corporates.length}</CardTitle>
+                          <CardTitle tag="p">{dashboard?.corporates}</CardTitle>
                           <p />
                         </div>
                       </Col>
@@ -301,7 +301,7 @@ function Dashboard() {
                       <Col md="8" xs="7">
                         <div className="numbers">
                           <p className="card-category">Revenue</p>
-                          <CardTitle tag="p">{dashboard?.revenue.length}</CardTitle>
+                          <CardTitle tag="p">{dashboard?.revenue}</CardTitle>
                           <p />
                         </div>
                       </Col>
