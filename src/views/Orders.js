@@ -203,11 +203,11 @@ function Orders() {
               <>
                 <Card>
                 <Row>
-                  <Col md="8">
+                  <Col md="7">
                     <CardHeader>All Orders</CardHeader>
 
                   </Col>
-                  <Col md="4">
+                  <Col md="5">
                     <DateRangePicker
                      className="filter"
                      onChange={(val) => filterDate(val)} 
@@ -216,6 +216,7 @@ function Orders() {
                      
                     />
                     <Button color="info" className="filter-button" onClick={filterOrder}>Filter</Button>
+                    <Button color="success" className="filter-button">Export</Button>
                   </Col>
 
                 </Row>
@@ -225,7 +226,9 @@ function Orders() {
                         <tr>
                           <th>Ref</th>
                           <th>Amount</th>
-                          <th>Channel</th>
+                          <th>Channel Name</th>
+                          <th>Channel Type</th>
+                          <th>Payment Type</th>
                           <th>Type</th>
                           <th>Status</th>
                           <th className="text-right">Created At</th>
@@ -237,6 +240,8 @@ function Orders() {
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.order_ref}</td>
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>N{order.order_amount}</td>
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.channel.channel_name}</td>
+                            <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.channel.channel_type}</td>
+                            <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.order_payment_type}</td>
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.order_type}</td>
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>
                             {order.order_status === "paid" ? (

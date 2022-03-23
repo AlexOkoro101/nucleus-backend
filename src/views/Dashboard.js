@@ -105,6 +105,12 @@ function Dashboard() {
         {dashboard && (
           <>
             <Row>
+              <Col md="10"></Col>
+              <Col md="2 text-right">
+                <Button color="success" className="filter-button">Add Loan</Button>
+              </Col>
+            </Row>
+            <Row>
               <Col lg="3" md="6" sm="6">
                 <Card className="card-stats">
                   <CardBody>

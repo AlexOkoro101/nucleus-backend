@@ -147,6 +147,7 @@ function Loans() {
                           <th>Channel</th>
                           <th>Type</th>
                           <th>Status</th>
+                          <th>Action</th>
                           <th className="text-right">Created At</th>
                         </tr>
                       </thead>
@@ -164,6 +165,7 @@ function Loans() {
                               <Badge>{order.order_status}</Badge>
                             )}
                             </td>
+                            <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}><Button color="success" className="filter-button">Approve</Button></td>
                             <td className="text-right"> 
                               {new Date(order.create_time).toLocaleDateString("en-NG",
                                   {
