@@ -139,6 +139,32 @@ function OrderDetails() {
                                         {orderDetail.order_type || "N/A"}
                                     </td>
                                 </tr>
+                                {orderDetail.order_payment_type === "LOAN" && (
+                                    <tr>
+                                        <td colSpan={2}>
+                                            <span className="font-bold">Card Detail</span><br />
+                                            <p>Card Type - {orderDetail.cards.card_type}</p>
+                                            <p>Card number - **** **** **** {orderDetail.cards.last4}</p>
+                                        </td>
+                                        <td colSpan={2}>
+                                            <span className="font-bold">Repayment Detail</span><br />
+                                            <p>Repayment amount - N{orderDetail.schedule[0].loan_payment_amount}</p>
+                                            <p>Repayment date - {orderDetail.schedule[0].loan_repayment_date}</p>
+                                        </td>
+                                        {/* <td>
+                                            <span className="font-bold">Status</span><br />
+                                            {orderDetail.order_status === "paid" ? (
+                                                <Badge color="success">{orderDetail.order_status}</Badge>
+                                                ) : (
+                                                <Badge>{orderDetail.order_status}</Badge>
+                                            )}
+                                        </td>
+                                        <td>
+                                            <span className="font-bold">Type</span><br />
+                                            {orderDetail.order_type || "N/A"}
+                                        </td> */}
+                                    </tr>
+                                )}
                                 
                             </tbody>
                             <thead className="text-primary bg-light">

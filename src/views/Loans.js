@@ -147,8 +147,8 @@ function Loans() {
                           <th>Channel</th>
                           <th>Type</th>
                           <th>Status</th>
+                          <th>Created At</th>
                           <th>Action</th>
-                          <th className="text-right">Created At</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -165,8 +165,7 @@ function Loans() {
                               <Badge>{order.order_status}</Badge>
                             )}
                             </td>
-                            <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}><Button color="success" className="filter-button">Approve</Button></td>
-                            <td className="text-right"> 
+                            <td> 
                               {new Date(order.create_time).toLocaleDateString("en-NG",
                                   {
                                       year: "numeric",
@@ -175,6 +174,10 @@ function Loans() {
                                   }
                               )}
                             </td>
+                            <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>
+                              <Button color="success" className="loan-button">Approve</Button>
+                              <Button color="danger" className="loan-button">Decline</Button>
+                              </td>
                           </tr>
 
                         ))}
