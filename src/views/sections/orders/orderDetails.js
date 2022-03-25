@@ -19,6 +19,8 @@ function OrderDetails() {
     const [orderDetail, setorderDetail] = useState(null)
 
     const [isLoading, setisLoading] = useState(false)
+    const [isButtonLoading, setisButtonLoading] = useState(false)
+    const [isSecondButtonLoading, setisSecondButtonLoading] = useState(false)
     const [error, seterror] = useState(null)
 
 
@@ -27,7 +29,7 @@ function OrderDetails() {
         return () => {
           getToken()
         }
-      }, [])
+      }, [isButtonLoading, isSecondButtonLoading])
 
     //   useEffect(() => {
     //       const item = document.getElementsByClassName('table-responsive')
@@ -57,9 +59,9 @@ function OrderDetails() {
         myHeaders.append("Authorization", `Bearer ${token}`);
 
         var requestOptions = {
-        method: 'GET',
-        headers: myHeaders,
-        redirect: 'follow'
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
         };
 
         fetch(enviroment.BASE_URL + "backend/orders/" + id, requestOptions)
@@ -78,6 +80,50 @@ function OrderDetails() {
         });
     }
 
+    const approveLoan = () => {
+        setisButtonLoading(true)
+
+        var myHeaders = new Headers();
+        myHeaders.append("Accept", "application/json");
+        myHeaders.append("Authorization", `Bearer ${userToken}`);
+
+        var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+        };
+
+        fetch(enviroment.BASE_URL + `backend/loans/approve/${id}/APPROVE`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            console.log(result)
+            setisButtonLoading(false)
+        })
+        .catch(error => console.log('error', error));
+    }
+
+    const declineLoan = () => {
+        setisSecondButtonLoading(true)
+
+        var myHeaders = new Headers();
+        myHeaders.append("Accept", "application/json");
+        myHeaders.append("Authorization", `Bearer ${userToken}`);
+
+        var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+        };
+
+        fetch(enviroment.BASE_URL + `backend/loans/approve/${id}/DECLINE`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            console.log(result)
+            setisSecondButtonLoading(false)
+        })
+        .catch(error => console.log('error', error));
+    }
+
 
 
     return (
@@ -90,8 +136,28 @@ function OrderDetails() {
             <Row>
                 <Col md="12">
                     <Card className="card-user">
-                    <CardHeader>
+                    <CardHeader className="d-flex justify-content-between">
                         <CardTitle tag="h5">Order Details</CardTitle>
+                        {(orderDetail.order_payment_type === "LOAN" && orderDetail.cards) && (
+                                    <div className="d-flex">
+                                        <Button color="success" onClick={approveLoan}>
+                                        {false ? (
+                                            <Spinner name='circle' color="#fff"  fadeIn="none"/>
+                                        ) : (
+                                            <>APPROVE LOAN</>
+                                        )}
+                                        </Button>
+
+                                        <Button color="danger" onClick={declineLoan}>
+                                        {false ? (
+                                            <Spinner name='circle' color="#fff"  fadeIn="none"/>
+                                        ) : (
+                                            <>DECLINE LOAN</>
+                                        )}
+                                        
+                                        </Button>
+                                    </div>
+                                )}
                     </CardHeader>
                     <CardBody>
                         <Table>
@@ -139,30 +205,40 @@ function OrderDetails() {
                                         {orderDetail.order_type || "N/A"}
                                     </td>
                                 </tr>
-                                {orderDetail.order_payment_type === "LOAN" && (
+                                {(orderDetail.order_payment_type === "LOAN" && orderDetail.cards) && (
                                     <tr>
-                                        <td colSpan={2}>
+                                        <td colSpan={1}>
                                             <span className="font-bold">Card Detail</span><br />
-                                            <p>Card Type - {orderDetail.cards.card_type}</p>
-                                            <p>Card number - **** **** **** {orderDetail.cards.last4}</p>
+                                            <>Card Type - {orderDetail.cards?.card_type}</> <br />
+                                            <>Card number - **** **** **** {orderDetail.cards?.last4}</>
                                         </td>
-                                        <td colSpan={2}>
-                                            <span className="font-bold">Repayment Detail</span><br />
-                                            <p>Repayment amount - N{orderDetail.schedule[0].loan_payment_amount}</p>
-                                            <p>Repayment date - {orderDetail.schedule[0].loan_repayment_date}</p>
+                                        <td colSpan={1}>
+                                            <span className="font-bold">Repayment Amount</span><br />
+                                            <>N{orderDetail.schedule[0]?.loan_payment_amount}</> <br />
                                         </td>
-                                        {/* <td>
-                                            <span className="font-bold">Status</span><br />
-                                            {orderDetail.order_status === "paid" ? (
-                                                <Badge color="success">{orderDetail.order_status}</Badge>
-                                                ) : (
-                                                <Badge>{orderDetail.order_status}</Badge>
-                                            )}
+                                        <td colSpan={1}>
+                                            <span className="font-bold">Repayment Date</span><br />
+                                            <>{orderDetail.schedule[0]?.loan_repayment_date}</>
                                         </td>
                                         <td>
-                                            <span className="font-bold">Type</span><br />
-                                            {orderDetail.order_type || "N/A"}
-                                        </td> */}
+                                            <span className="font-bold">Loan Status</span><br />
+                                            {orderDetail.order_loan_status == "APPROVE" && (
+                                                <Badge color="success">{orderDetail.order_loan_status}</Badge>
+                                            )}
+                                            {orderDetail.order_loan_status == "DECLINE" && (
+                                                <Badge color="danger">{orderDetail.order_loan_status}</Badge>
+                                            )}
+                                            {orderDetail.order_loan_status == "AWAITING" && (
+                                                <Badge color="warning">{orderDetail.order_loan_status}</Badge>
+                                            )}
+                                            {orderDetail.order_loan_status == "CLOSED" && (
+                                                <Badge color="info">{orderDetail.order_loan_status}</Badge>
+                                            )}
+                                            {orderDetail.order_loan_status == null && (
+                                                <p><Badge>{"Not Active"}</Badge></p>
+                                            )}
+                                            
+                                        </td>
                                     </tr>
                                 )}
                                 

@@ -147,8 +147,9 @@ function Loans() {
                           <th>Channel</th>
                           <th>Type</th>
                           <th>Status</th>
+                          <th>Loan Status</th>
                           <th>Created At</th>
-                          <th>Action</th>
+                          {/* <th>Action</th> */}
                         </tr>
                       </thead>
                       <tbody>
@@ -156,13 +157,30 @@ function Loans() {
                           <tr key={order.order_id} className="plans-row">
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.order_ref}</td>
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>N{order.order_amount}</td>
-                            <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.order_channel}</td>
+                            <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.channel.channel_name}</td>
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.order_type}</td>
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>
                             {order.order_status === "paid" ? (
                               <Badge color="success">{order.order_status}</Badge>
                             ) : (
                               <Badge>{order.order_status}</Badge>
+                            )}
+                            </td>
+                            <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>
+                            {order.order_loan_status == "APPROVE" && (
+                              <Badge color="success">{order.order_loan_status}</Badge>
+                            )}
+                            {order.order_loan_status == "DECLINE" && (
+                              <Badge color="danger">{order.order_loan_status}</Badge>
+                            )}
+                            {order.order_loan_status == "AWAITING" && (
+                              <Badge color="warning">{order.order_loan_status}</Badge>
+                            )}
+                            {order.order_loan_status == "CLOSED" && (
+                              <Badge color="info">{order.order_loan_status}</Badge>
+                            )}
+                            {order.order_loan_status == null && (
+                              <Badge>{"Not Active"}</Badge>
                             )}
                             </td>
                             <td> 
@@ -174,10 +192,10 @@ function Loans() {
                                   }
                               )}
                             </td>
-                            <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>
+                            {/* <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>
                               <Button color="success" className="loan-button">Approve</Button>
                               <Button color="danger" className="loan-button">Decline</Button>
-                              </td>
+                              </td> */}
                           </tr>
 
                         ))}
