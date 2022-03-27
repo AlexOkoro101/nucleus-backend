@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Card, CardHeader, CardBody, CardFooter, Row, Col,  Button,
     CardTitle,
     FormGroup,
@@ -326,8 +326,8 @@ function OrderDetails() {
                                 <th  className="p-10" colSpan="4">Customers</th>
                             </thead>
                             <tbody>
-                                {orderDetail?.entity.map((customer) => (
-                                    <>
+                                {orderDetail?.entity.map((customer, index) => (
+                                    <Fragment key={index}>
                                     <tr>
                                         <td>
                                             <span className="font-bold">Photo</span><br />
@@ -388,7 +388,7 @@ function OrderDetails() {
                                         <td colSpan="4"></td>
                                     </tr>
                                     
-                                    </>
+                                    </Fragment>
                                 ))}
                             </tbody>
                         </Table>

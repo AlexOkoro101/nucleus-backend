@@ -187,6 +187,45 @@ function Orders() {
       });
   }
 
+  const exportOrders = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    fetch(enviroment.BASE_URL + `backend/orders/export?channel&ref&processed&startDate=${firstdate ? firstdate : ""}&endDate=${seconddate ? seconddate : ""}&type&loanStatus`, requestOptions)
+      .then(response => response.blob())
+      .then(result => {
+        notificationAlert.current.notificationAlert({
+          place: "tr",
+          message: (
+            <div>
+              <div>Downloading File</div>
+            </div>
+          ),
+          type: "success",
+          icon: "nc-icon nc-bell-55",
+        });
+        console.log(result)
+        const url = window.URL.createObjectURL(new Blob([result]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', firstdate ? `Report${firstdate} ${seconddate}.xlsx` : "Report.xlsx");
+        // 3. Append to html page
+        document.body.appendChild(link);
+        // 4. Force download
+        link.click();
+        // 5. Clean up and remove the link
+        link.parentNode.removeChild(link);
+      })
+      .catch(error => console.log('error', error));
+  }
+
 
 
   return (
@@ -216,7 +255,7 @@ function Orders() {
                      
                     />
                     <Button color="info" className="filter-button" onClick={filterOrder}>Filter</Button>
-                    <Button color="success" className="filter-button">Export</Button>
+                    <Button color="success" className="filter-button" onClick={exportOrders}>Export</Button>
                   </Col>
 
                 </Row>
