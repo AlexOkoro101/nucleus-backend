@@ -51,9 +51,8 @@ function Sidebar(props) {
           {props.routes.map((prop, key) => {
             return (
               <li
-                className={
-                  activeRoute(prop.path) + (prop.pro ? " active-pro" : ""),
-                  prop.display === true ? "do-not-display" : ""
+                className={activeRoute(prop.path) + (prop.pro ? " active-pro" : "") + 
+                  prop.display === true ? " do-not-display" : ""
                 }
                 key={key}
               >
