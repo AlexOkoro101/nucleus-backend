@@ -205,44 +205,70 @@ function OrderDetails() {
                                         {orderDetail.order_type || "N/A"}
                                     </td>
                                 </tr>
-                                {(orderDetail.order_payment_type === "LOAN" && orderDetail.cards) && (
-                                    <tr>
-                                        <td colSpan={1}>
-                                            <span className="font-bold">Card Detail</span><br />
-                                            <>Card Type - {orderDetail.cards?.card_type}</> <br />
-                                            <>Card number - **** **** **** {orderDetail.cards?.last4}</>
-                                        </td>
-                                        <td colSpan={1}>
-                                            <span className="font-bold">Repayment Amount</span><br />
-                                            <>N{orderDetail.schedule[0]?.loan_payment_amount}</> <br />
-                                        </td>
-                                        <td colSpan={1}>
-                                            <span className="font-bold">Repayment Date</span><br />
-                                            <>{orderDetail.schedule[0]?.loan_repayment_date}</>
-                                        </td>
-                                        <td>
-                                            <span className="font-bold">Loan Status</span><br />
-                                            {orderDetail.order_loan_status == "APPROVE" && (
-                                                <Badge color="success">{orderDetail.order_loan_status}</Badge>
-                                            )}
-                                            {orderDetail.order_loan_status == "DECLINE" && (
-                                                <Badge color="danger">{orderDetail.order_loan_status}</Badge>
-                                            )}
-                                            {orderDetail.order_loan_status == "AWAITING" && (
-                                                <Badge color="warning">{orderDetail.order_loan_status}</Badge>
-                                            )}
-                                            {orderDetail.order_loan_status == "CLOSED" && (
-                                                <Badge color="info">{orderDetail.order_loan_status}</Badge>
-                                            )}
-                                            {orderDetail.order_loan_status == null && (
-                                                <p><Badge>{"Not Active"}</Badge></p>
-                                            )}
-                                            
-                                        </td>
-                                    </tr>
-                                )}
-                                
                             </tbody>
+                            {(orderDetail.order_payment_type === "LOAN" && orderDetail.cards) && (
+                                <>
+                                    <thead className="text-primary bg-light">
+                                        <th  className="p-10" colSpan="4">Loan Details</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colSpan={1}>
+                                                <span className="font-bold">Card Detail</span><br />
+                                                <>Card Type - {orderDetail.cards?.card_type}</> <br />
+                                                <>Card number - **** **** **** {orderDetail.cards?.last4}</>
+                                            </td>
+                                            <td colSpan={1}>
+                                                <span className="font-bold">Repayment Amount</span><br />
+                                                <> {orderDetail.schedule.length >= 1 ? `N${orderDetail.schedule[0]?.loan_payment_amount}` : "N/A"}</> <br />
+                                            </td>
+                                            <td colSpan={1}>
+                                                <span className="font-bold">Repayment Date</span><br />
+                                                <>{orderDetail.schedule.length >= 1 ? `${orderDetail.schedule[0]?.loan_repayment_date}` : "N/A"}</>
+                                            </td>
+                                            <td>
+                                                <span className="font-bold">Loan Status</span><br />
+                                                {orderDetail.order_loan_status == "APPROVE" && (
+                                                    <Badge color="success">{orderDetail.order_loan_status}</Badge>
+                                                )}
+                                                {orderDetail.order_loan_status == "DECLINE" && (
+                                                    <Badge color="danger">{orderDetail.order_loan_status}</Badge>
+                                                )}
+                                                {orderDetail.order_loan_status == "AWAITING" && (
+                                                    <Badge color="warning">{orderDetail.order_loan_status}</Badge>
+                                                )}
+                                                {orderDetail.order_loan_status == "CLOSED" && (
+                                                    <Badge color="info">{orderDetail.order_loan_status}</Badge>
+                                                )}
+                                                {orderDetail.order_loan_status == null && (
+                                                    <p><Badge>{"Not Active"}</Badge></p>
+                                                )}
+                                                
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colSpan={1}>
+                                                <span className="font-bold">BVN</span><br />
+                                                {JSON.parse(orderDetail?.meta).bvn}
+                                            </td>
+                                            <td colSpan={1}>
+                                                <span className="font-bold">Salary Day</span><br />
+                                                <> {JSON.parse(orderDetail?.meta).salaryDate}</> <br />
+                                            </td>
+                                            <td colSpan={1}>
+                                                <span className="font-bold">Bank</span><br />
+                                                <>{JSON.parse(orderDetail?.meta).accountDetails.bank}</>
+                                            </td>
+                                            <td>
+                                                <span className="font-bold">Account Details</span><br />
+                                                <>Name - {JSON.parse(orderDetail?.meta).accountDetails.name}</> <br />
+                                                <>Number - {JSON.parse(orderDetail?.meta).accountDetails.number}</>
+                                                
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </>
+                            )}
                             <thead className="text-primary bg-light">
                                 <th  className="p-10" colSpan="4">Plan Details</th>
                             </thead>
