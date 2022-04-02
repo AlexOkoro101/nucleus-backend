@@ -10,10 +10,12 @@ import { Card, CardHeader, CardBody, CardFooter, Row, Col,  Button,
 import {useParams} from 'react-router-dom';
 import {enviroment} from '../../../variables/enviroment';
 import {useHistory} from "react-router-dom";
+import NotificationAlert from "react-notification-alert";
 
 function OrderDetails() {
     const {id} = useParams()
     var Spinner = require('react-spinkit');
+    const notificationAlert = React.useRef();
     const history = useHistory();
     const [userToken, setuserToken] = useState(null)
     const [orderDetail, setorderDetail] = useState(null)
@@ -98,6 +100,31 @@ function OrderDetails() {
         .then(result => {
             console.log(result)
             setisButtonLoading(false)
+            if(result.status) {
+                notificationAlert.current.notificationAlert({
+                    place: "tr",
+                    message: (
+                      <div>
+                        Successful.
+                        <p>{result.msg}</p>
+                      </div>
+                    ),
+                    type: "success",
+                    icon: "nc-icon nc-bell-55",
+                });
+            } else {
+                notificationAlert.current.notificationAlert({
+                    place: "tr",
+                    message: (
+                      <div>
+                        Failed.
+                        <p>{result.msg}</p>
+                      </div>
+                    ),
+                    type: "danger",
+                    icon: "nc-icon nc-bell-55",
+                });
+            }
         })
         .catch(error => console.log('error', error));
     }
@@ -120,6 +147,31 @@ function OrderDetails() {
         .then(result => {
             console.log(result)
             setisSecondButtonLoading(false)
+            if(result.status) {
+                notificationAlert.current.notificationAlert({
+                    place: "tr",
+                    message: (
+                      <div>
+                        Successful.
+                        <p>{result.msg}</p>
+                      </div>
+                    ),
+                    type: "success",
+                    icon: "nc-icon nc-bell-55",
+                });
+            } else {
+                notificationAlert.current.notificationAlert({
+                    place: "tr",
+                    message: (
+                      <div>
+                        Failed.
+                        <p>{result.msg}</p>
+                      </div>
+                    ),
+                    type: "danger",
+                    icon: "nc-icon nc-bell-55",
+                });
+            }
         })
         .catch(error => console.log('error', error));
     }
@@ -132,6 +184,7 @@ function OrderDetails() {
             {isLoading && (
                  <Spinner name='circle' color="#663391"  fadeIn="none"/>
             )}
+            <NotificationAlert ref={notificationAlert} />
             {orderDetail && (
             <Row>
                 <Col md="12">
@@ -139,25 +192,19 @@ function OrderDetails() {
                     <CardHeader className="d-flex justify-content-between">
                         <CardTitle tag="h5">Order Details</CardTitle>
                         {(orderDetail.order_payment_type === "LOAN" && orderDetail.cards) && (
-                                    <div className="d-flex">
-                                        <Button color="success" onClick={approveLoan}>
-                                        {false ? (
-                                            <Spinner name='circle' color="#fff"  fadeIn="none"/>
-                                        ) : (
-                                            <>APPROVE LOAN</>
-                                        )}
-                                        </Button>
-
-                                        <Button color="danger" onClick={declineLoan}>
-                                        {false ? (
-                                            <Spinner name='circle' color="#fff"  fadeIn="none"/>
-                                        ) : (
-                                            <>DECLINE LOAN</>
-                                        )}
-                                        
-                                        </Button>
-                                    </div>
+                            <div className="d-flex">
+                                {orderDetail.order_loan_status !== "APPROVE" && (
+                                    <Button color="success" onClick={approveLoan}>
+                                        APPROVE LOAN
+                                    </Button>
                                 )}
+                                {orderDetail.order_loan_status !== "DECLINE" && (
+                                    <Button color="danger" onClick={declineLoan}>
+                                        DECLINE LOAN
+                                    </Button>
+                                )}
+                            </div>
+                        )}
                     </CardHeader>
                     <CardBody>
                         <Table>
@@ -214,25 +261,25 @@ function OrderDetails() {
                                     <tbody>
                                         <tr>
                                             <td colSpan={1}>
-                                                <span className="font-bold">Card Detail</span><br />
-                                                <>Card Type - {orderDetail.cards?.card_type}</> <br />
-                                                <>Card number - **** **** **** {orderDetail.cards?.last4}</>
+                                                <span className="font-bold">Card Type</span><br />
+                                                {orderDetail.cards?.card_type}
+                                                <>Card number - </>
                                             </td>
                                             <td colSpan={1}>
-                                                <span className="font-bold">Repayment Amount</span><br />
-                                                <> {orderDetail.schedule.length >= 1 ? `N${orderDetail.schedule[0]?.loan_payment_amount}` : "N/A"}</> <br />
+                                                <span className="font-bold">Card Number</span><br />
+                                                **** **** **** {orderDetail.cards?.last4}
                                             </td>
                                             <td colSpan={1}>
-                                                <span className="font-bold">Repayment Date</span><br />
-                                                <>{orderDetail.schedule.length >= 1 ? `${orderDetail.schedule[0]?.loan_repayment_date}` : "N/A"}</>
+                                                <span className="font-bold">Card Expiry</span><br />
+                                                {orderDetail.card_exp_date}
                                             </td>
                                             <td>
                                                 <span className="font-bold">Loan Status</span><br />
                                                 {orderDetail.order_loan_status == "APPROVE" && (
-                                                    <Badge color="success">{orderDetail.order_loan_status}</Badge>
+                                                    <Badge color="success">{orderDetail.order_loan_status}D</Badge>
                                                 )}
                                                 {orderDetail.order_loan_status == "DECLINE" && (
-                                                    <Badge color="danger">{orderDetail.order_loan_status}</Badge>
+                                                    <Badge color="danger">{orderDetail.order_loan_status}D</Badge>
                                                 )}
                                                 {orderDetail.order_loan_status == "AWAITING" && (
                                                     <Badge color="warning">{orderDetail.order_loan_status}</Badge>
@@ -266,6 +313,42 @@ function OrderDetails() {
                                                 
                                             </td>
                                         </tr>
+                                    </tbody>
+                                </>
+                            )}
+                            {orderDetail.schedule.length >= 1 && (
+                                <>
+                                    <thead className="text-primary bg-light">
+                                        <th  className="p-10" colSpan="4">Repayment Details</th>
+                                    </thead>
+                                    <tbody>
+                                        {orderDetail?.schedule.map((schedule, index) => (
+                                            <tr key={index}>
+                                                <td colSpan={1}>
+                                                    <span className="font-bold">Repayment Amount</span><br />
+                                                    N{schedule.loan_payment_amount}
+                                                </td>
+                                                <td colSpan={1}>
+                                                    <span className="font-bold">Repayment Date</span><br />
+                                                    {schedule.loan_repayment_date}
+                                                </td>
+                                                <td colSpan={1}>
+                                                    <span className="font-bold">Order Amount</span><br />
+                                                    {schedule.order_amount}
+                                                </td>
+                                                <td>
+                                                    <span className="font-bold">Status</span><br />
+                                                    {schedule.status === "paid" && (
+                                                        <Badge color="success">{schedule.status}</Badge>
+                                                    )}
+                                                    {schedule.status === "unpaid" && (
+                                                        <Badge>{schedule.status}</Badge>
+                                                    )}
+                                                    
+                                                </td>
+                                            </tr>
+
+                                        ))}
                                     </tbody>
                                 </>
                             )}

@@ -96,7 +96,7 @@ var routes = [
     icon: "nc-icon nc-circle-10",
     component: CreateAdmin,
     layout: "/admin",
-    display: true
+    display: false
   },
   {
     path: "/ussd-logs",
@@ -132,7 +132,7 @@ var routes = [
     icon: "nc-icon nc-pallete",
     component: PlanDetails,
     layout: "/admin",
-    display: true,
+    display: false,
   },
   {
     path: "/create-plan",
@@ -140,7 +140,7 @@ var routes = [
     icon: "nc-icon nc-pallete",
     component: CreatePlan,
     layout: "/admin",
-    display: true,
+    display: false,
   },
   {
     path: "/insurers/:id",
@@ -148,7 +148,7 @@ var routes = [
     icon: "nc-icon nc-pallete",
     component: insurerDetails,
     layout: "/admin",
-    display: true,
+    display: false,
   },
   {
     path: "/orders/:id",
@@ -156,7 +156,7 @@ var routes = [
     icon: "nc-icon nc-pallete",
     component: OrderDetails,
     layout: "/admin",
-    display: true,
+    display: false,
   },
 
   // plans
@@ -175,7 +175,7 @@ var routes = [
     icon: "nc-icon nc-circle-10",
     component: Signin,
     layout: "/auth",
-    display: true,
+    display: false,
   },
 ];
 export default routes;

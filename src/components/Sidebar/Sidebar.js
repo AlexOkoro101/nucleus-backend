@@ -16,6 +16,7 @@ function Sidebar(props) {
   const activeRoute = (routeName) => {
     return props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
   };
+  // console.log(routeName)
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(sidebar.current, {
@@ -49,22 +50,31 @@ function Sidebar(props) {
       <div className="sidebar-wrapper" ref={sidebar}>
         <Nav>
           {props.routes.map((prop, key) => {
+            console.log(prop)
             return (
-              <li
-                className={activeRoute(prop.path) + (prop.pro ? " active-pro" : "") + 
-                  prop.display === true ? " do-not-display" : ""
-                }
-                key={key}
-              >
-                <NavLink
-                  to={prop.layout + prop.path}
-                  className="nav-link"
-                  activeClassName="active"
+              <>
+                {prop.display === false ? (
+                  <></>
+                ): (
+                <li
+                  className={activeRoute(prop.path) + (prop.pro ? " active-pro" : "") + 
+                    prop.display === false ? " do-not-display" : ""
+                  }
+                  key={key}
                 >
-                  <i className={prop.icon} />
-                  <p>{prop.name}</p>
-                </NavLink>
-              </li>
+                  <NavLink
+                    to={prop.layout + prop.path}
+                    className="nav-link"
+                    activeClassName="active"
+                  >
+                    <i className={prop.icon} />
+                    <p>{prop.name}</p>
+                  </NavLink>
+                </li>
+
+                )}
+
+              </>
             );
           })}
         </Nav>
