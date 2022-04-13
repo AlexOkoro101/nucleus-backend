@@ -266,7 +266,6 @@ function OrderDetails() {
                                             <td colSpan={1}>
                                                 <span className="font-bold">Card Type</span><br />
                                                 {orderDetail.cards?.card_type}
-                                                <>Card number - </>
                                             </td>
                                             <td colSpan={1}>
                                                 <span className="font-bold">Card Number</span><br />
@@ -299,7 +298,7 @@ function OrderDetails() {
                                         <tr>
                                             <td colSpan={1}>
                                                 <span className="font-bold">Loan Amount</span><br />
-                                                N{orderDetail.order_amount}
+                                                N{numberFormat.format(orderDetail.order_amount)}
                                             </td>
                                             <td colSpan={1}>
                                                 <span className="font-bold">Loan Tenor</span><br />
@@ -311,7 +310,7 @@ function OrderDetails() {
                                             </td>
                                             <td>
                                                 <span className="font-bold">Net Monthly Income</span><br />
-                                                <>{JSON.parse(orderDetail?.meta)?.netIncome.toLocaleString("en-US")}</> 
+                                                <>N{numberFormat.format(JSON.parse(orderDetail?.meta)?.netIncome)}</> 
                                             </td>
                                         </tr>
                                         <tr>
