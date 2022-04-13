@@ -13,6 +13,7 @@ import {useHistory} from "react-router-dom";
 import NotificationAlert from "react-notification-alert";
 
 function OrderDetails() {
+    const numberFormat = new Intl.NumberFormat('en-NG')
     const {id} = useParams()
     var Spinner = require('react-spinkit');
     const notificationAlert = React.useRef();
@@ -193,16 +194,18 @@ function OrderDetails() {
                         <CardTitle tag="h5">Order Details</CardTitle>
                         {(orderDetail.order_payment_type === "LOAN" && orderDetail.cards) && (
                             <div className="d-flex">
-                                {orderDetail.order_loan_status !== "APPROVE" && (
+                                {orderDetail.order_loan_status !== "APPROVE" && orderDetail.order_loan_status !== "DECLINE" && (
+                                    <>
                                     <Button color="success" onClick={approveLoan}>
                                         APPROVE LOAN
                                     </Button>
-                                )}
-                                {orderDetail.order_loan_status !== "DECLINE" && (
                                     <Button color="danger" onClick={declineLoan}>
                                         DECLINE LOAN
                                     </Button>
+
+                                    </>
                                 )}
+                               
                             </div>
                         )}
                     </CardHeader>
@@ -271,7 +274,7 @@ function OrderDetails() {
                                             </td>
                                             <td colSpan={1}>
                                                 <span className="font-bold">Card Expiry</span><br />
-                                                {orderDetail.card_exp_date}
+                                                {orderDetail.cards?.card_exp_date}
                                             </td>
                                             <td>
                                                 <span className="font-bold">Loan Status</span><br />
@@ -295,21 +298,39 @@ function OrderDetails() {
                                         </tr>
                                         <tr>
                                             <td colSpan={1}>
+                                                <span className="font-bold">Loan Amount</span><br />
+                                                N{orderDetail.order_amount}
+                                            </td>
+                                            <td colSpan={1}>
+                                                <span className="font-bold">Loan Tenor</span><br />
+                                                <> {orderDetail?.order_loan_tenure} Days</> <br />
+                                            </td>
+                                            <td colSpan={1}>
+                                                <span className="font-bold">Interest Rate</span><br />
+                                                <>{JSON.parse(orderDetail?.meta)?.interestRate}</>
+                                            </td>
+                                            <td>
+                                                <span className="font-bold">Net Monthly Income</span><br />
+                                                <>{JSON.parse(orderDetail?.meta)?.netIncome.toLocaleString("en-US")}</> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colSpan={1}>
                                                 <span className="font-bold">BVN</span><br />
-                                                {JSON.parse(orderDetail?.meta).bvn}
+                                                {JSON.parse(orderDetail?.meta)?.bvn}
                                             </td>
                                             <td colSpan={1}>
                                                 <span className="font-bold">Salary Day</span><br />
-                                                <> {JSON.parse(orderDetail?.meta).salaryDate}</> <br />
+                                                <> {JSON.parse(orderDetail?.meta)?.salaryDate}</> <br />
                                             </td>
                                             <td colSpan={1}>
                                                 <span className="font-bold">Bank</span><br />
-                                                <>{JSON.parse(orderDetail?.meta).accountDetails.bank}</>
+                                                <>{JSON.parse(orderDetail?.meta)?.accountDetails.bank}</>
                                             </td>
                                             <td>
                                                 <span className="font-bold">Account Details</span><br />
-                                                <>Name - {JSON.parse(orderDetail?.meta).accountDetails.name}</> <br />
-                                                <>Number - {JSON.parse(orderDetail?.meta).accountDetails.number}</>
+                                                <>Name - {JSON.parse(orderDetail?.meta)?.accountDetails.name}</> <br />
+                                                <>Number - {JSON.parse(orderDetail?.meta)?.accountDetails.number}</>
                                                 
                                             </td>
                                         </tr>
