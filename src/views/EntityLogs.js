@@ -250,10 +250,10 @@ function EntityLogs() {
                         </tr>
                       </thead>
                       <tbody>
-                        {entities?.slice(0).reverse().map((entity) => (
+                        {entities?.map((entity) => (
                           <tr key={entity.entity_id} className="plans-row" onClick={() => {history.push('/admin/entities/' + entity.entity_id)}}>
                             <td>
-                              <img src={entity.entity_photo} alt="" width="50" height="50" />
+                              <img src={entity.entity_photo ?? entity.entity_photo_url} alt="" width="50" height="50" />
                             </td>
                             <td>{entity.entity_firstname} {entity.entity_lastname}</td>
                             <td>{entity.entity_sex || "N/A"}</td>

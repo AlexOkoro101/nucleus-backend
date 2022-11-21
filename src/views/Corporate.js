@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router";
 // reactstrap components
-import { Card, CardHeader, CardBody, Row, Col, Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Badge, Pagination, PaginationItem, PaginationLink } from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col, Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Badge, Pagination, PaginationItem, PaginationLink, FormGroup } from "reactstrap";
 import { enviroment } from "variables/enviroment";
 import NotificationAlert from "react-notification-alert";
 import ReactPaginate from 'react-paginate'
@@ -16,6 +16,12 @@ function Corporate() {
   const [error, seterror] = useState(null)
   const [modal, setmodal] = useState(false)
   const [orderId, setorderId] = useState(null)
+
+  //fund wallet states
+  const [fundWalletModal, setFundWalletModal] = useState(false);
+  const [walletlIsLoading, setWalletIsLoading] = useState(false);
+  const [selectedChannelId, setSelectedChannelId] = useState(null);
+  const [fundAmount, setFundAmount] = useState('');
 
   //Route hook
   const history = useHistory()
@@ -121,7 +127,70 @@ function Corporate() {
     fetchOrders(currentPage)
   }
 
+  const handleFundClick = (id) => {
+    setSelectedChannelId(id);
+    setFundWalletModal(true);
 
+  }
+
+  const submitFunds = () => {
+    setWalletIsLoading(true)
+    seterror(null)
+
+    const myHeaders = new Headers();
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    const payload = JSON.stringify({
+      amount: Number(fundAmount),
+      corporateId: selectedChannelId,
+    });
+
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: payload,
+      redirect: 'follow'
+    };
+
+    fetch(enviroment.BASE_URL + "backend/channel/fund-wallet", requestOptions)
+      .then(response => {
+        setWalletIsLoading(false)
+        return response.text()
+      })
+      .then(result => {
+        console.log("fund", result)
+        const item = JSON.parse(result)
+
+        if(item?.status === true) {
+          setFundWalletModal((prev) => !prev)
+          notificationAlert.current.notificationAlert({
+            place: "tr",
+            message: (
+              <div>
+                <div>Channel Funded Successfully.</div>
+              </div>
+            ),
+            type: "success",
+            icon: "nc-icon nc-bell-55",
+          });
+        } else if(item?.message) {
+          notificationAlert.current.notificationAlert({
+            place: "tr",
+            message: (
+              <div>
+                <div>Unsuccessful!</div>
+              </div>
+            ),
+            type: "danger",
+            icon: "nc-icon nc-bell-55",
+          });
+        }
+      })
+      .catch(error => console.log('error', error));
+  }
 
   return (
     <>
@@ -148,7 +217,8 @@ function Corporate() {
                           <th>Phone</th>
                           <th>Industry</th>
                           <th>CAC Number</th>
-                          <th className="text-right">Created At</th>
+                          <th>Created At</th>
+                          <th className="text-right">Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -160,7 +230,7 @@ function Corporate() {
                             <td>{order.corporate_phone || "N/A"}</td>
                             <td>{order.corporate_industry}</td>
                             <td>{order.corporate_cacNo || "N/A"}</td>
-                            <td className="text-right"> 
+                            <td> 
                               {new Date(order.created).toLocaleDateString("en-NG",
                                   {
                                       year: "numeric",
@@ -168,6 +238,17 @@ function Corporate() {
                                       month: "long",
                                   }
                               )}
+                            </td>
+                            <td className="text-right">
+                              <Button
+                                color="primary"
+                                type="button"
+                                size="sm"
+                                outline
+                                onClick={() => handleFundClick(order?.corporate_id)}
+                              >
+                                  Fund wallet
+                              </Button>
                             </td>
                           </tr>
 
@@ -199,6 +280,42 @@ function Corporate() {
           </Col>
         </Row>
       </div>
+      <Modal
+        isOpen={fundWalletModal}
+      >
+        <ModalHeader toggle={() => setmodal(!fundWalletModal)}>
+          Fund Channel
+        </ModalHeader>
+        <ModalBody>
+          <Col md="8">
+            <FormGroup>
+              <label>Amount</label>
+              <Input
+                id="name"
+                name="name"
+                type="number"
+                value={fundAmount}
+                onChange={(e) => setFundAmount(e.target.value)}
+              />
+            </FormGroup>
+          </Col>
+        </ModalBody>
+        <ModalFooter>
+          <Button
+            color="primary"
+            onClick={submitFunds}
+          >
+            {walletlIsLoading && (
+              <Spinner name='circle' color="#ffffff" fadeIn="none" className="button-loader" />
+            )}
+            Submit
+          </Button>
+          {' '}
+          <Button onClick={() => setFundWalletModal((prev) => !prev)}>
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
     </>
   );
 }

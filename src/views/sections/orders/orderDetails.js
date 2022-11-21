@@ -26,6 +26,10 @@ function OrderDetails() {
     const [isSecondButtonLoading, setisSecondButtonLoading] = useState(false)
     const [error, seterror] = useState(null)
 
+    //update entity
+    const [entityStatus, setEntityStatus] = useState('');
+    const [statusLoading, setStatusLoading] = useState(false);
+
 
     useEffect(() => {
         getToken()
@@ -177,7 +181,62 @@ function OrderDetails() {
         .catch(error => console.log('error', error));
     }
 
-
+    const handleStatusUpdate = (id) => {
+        setStatusLoading(true)
+        seterror(null)
+    
+    
+        var myHeaders = new Headers();
+        myHeaders.append("Accept", "application/json");
+        myHeaders.append("Authorization", `Bearer ${userToken}`);
+        myHeaders.append("Content-Type", "application/json");
+    
+        var raw = JSON.stringify({
+          status: entityStatus,
+        });
+        
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+    
+        fetch(enviroment.BASE_URL + `backend/entity/update-status/${id}`, requestOptions)
+          .then(response => {
+            setStatusLoading(false)
+            return response.text()
+          })
+          .then(result => {
+            console.log("res", result)
+            const item = JSON.parse(result)
+    
+            if(item?.status === true) {
+              notificationAlert.current.notificationAlert({
+                place: "tr",
+                message: (
+                  <div>
+                    <div>Entity Updated Successfully.</div>
+                  </div>
+                ),
+                type: "success",
+                icon: "nc-icon nc-bell-55",
+              });
+            } else if(item?.message) {
+              notificationAlert.current.notificationAlert({
+                place: "tr",
+                message: (
+                  <div>
+                    <div>Unsuccessful!</div>
+                  </div>
+                ),
+                type: "danger",
+                icon: "nc-icon nc-bell-55",
+              });
+            }
+          })
+          .catch(error => console.log('error', error));
+      }
 
     return (
         <>
@@ -460,8 +519,8 @@ function OrderDetails() {
                                     <tr>
                                         <td>
                                             <span className="font-bold">Photo</span><br />
-                                            {customer.entity_photo ? (
-                                                <img src={customer.entity_photo} alt="" width="50" />
+                                            {(customer.entity_photo ||  customer.entity_photo_url) ? (
+                                                <img src={customer.entity_photo ?? customer.entity_photo_url} alt="" width="50" />
                                             ) : ("N/A")}
                                         </td>
                                         <td>
@@ -512,6 +571,37 @@ function OrderDetails() {
                                             <span className="font-bold">Agreement</span><br />
                                             {customer.entity_agreement ? "True" : "False"}
                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="d-flex">
+                                                <select
+                                                className="plan-select w-50 mr-2"
+                                                id="type"
+                                                name="type"
+                                                value={entityStatus}
+                                                onChange={(e) => setEntityStatus(e.target.value)}
+                                                >
+                                                <option>Select status</option>
+                                                <option value="pending">Pending</option>
+                                                <option value="processed">Processed</option>
+                                                <option value="notEnrolled">Not Enrolled</option>
+                                                </select>
+                                            <Button
+                                                color="primary"
+                                                type="button"
+                                                size="sm"
+                                                outline
+                                                onClick={() => handleStatusUpdate(customer.entity_id)}
+                                            >
+                                                {statusLoading && (
+                                                    <Spinner name='circle' color="#ffffff" fadeIn="none" className="button-loader" />
+                                                )}
+                                                Update Status
+                                            </Button>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                     </tr>
                                     <tr className="bg-light">
                                         <td colSpan="4"></td>

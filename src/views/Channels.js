@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useHistory } from "react-router";
 // reactstrap components
 import { Card, CardHeader, CardBody, Row, Col, Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Tooltip, FormGroup } from "reactstrap";
 import { enviroment } from "variables/enviroment";
@@ -20,11 +19,6 @@ function Channels() {
   const [email, setemail] = useState("")
 
   const [showApi, setshowApi] = useState(false)
-
-  //Route hook
-  const history = useHistory()
-
-
 
   useEffect(() => {
     getToken()
@@ -74,11 +68,6 @@ function Channels() {
         seterror(error)
         console.log('error', error)
       });
-  }
-
-  const showModal = () => {
-    setmodal(true)
-    // setplanId(id)
   }
 
   const submitChannel = () => {
@@ -179,7 +168,7 @@ function Channels() {
                         </tr>
                       </thead>
                       <tbody>
-                        {channels?.slice(0).reverse().map((channel) => (
+                        {channels?.map((channel) => (
                           <tr key={channel.channel_id}>
                             <td>{channel.channel_name}</td>
                             <td>
