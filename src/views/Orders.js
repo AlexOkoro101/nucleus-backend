@@ -292,7 +292,7 @@ function Orders() {
                                     "warning" :
                                     order?.order_loan_status === "notEnrolled" ?
                                     "danger" :
-                                    ""
+                                    "secondary"
                                   }
                                 >
                                   {order.order_loan_status ?? "N/A"}
