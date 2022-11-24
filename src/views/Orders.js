@@ -270,6 +270,7 @@ function Orders() {
                           <th>Payment Type</th>
                           <th>Type</th>
                           <th>Status</th>
+                          <th>Order Loan staus</th>
                           <th className="text-right">Created At</th>
                         </tr>
                       </thead>
@@ -283,11 +284,26 @@ function Orders() {
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.order_payment_type}</td>
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>{order.order_type}</td>
                             <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>
-                            {order.order_status === "paid" ? (
-                              <Badge color="success">{order.order_status}</Badge>
-                            ) : (
-                              <Badge>{order.order_status}</Badge>
-                            )}
+                                <Badge 
+                                  color={
+                                    order?.order_loan_status === "processed" ?
+                                    "success" :
+                                    order?.order_loan_status === "pending" ? 
+                                    "warning" :
+                                    order?.order_loan_status === "notEnrolled" ?
+                                    "danger" :
+                                    ""
+                                  }
+                                >
+                                  {order.order_loan_status ?? "N/A"}
+                                </Badge>
+                            </td>
+                            <td onClick={() => {history.push('/admin/orders/' + order.order_id)}}>
+                              {order.order_status === "paid" ? (
+                                <Badge color="success">{order.order_status}</Badge>
+                              ) : (
+                                <Badge>{order.order_status}</Badge>
+                              )}
                             </td>
                             <td className="text-right"> 
                               {new Date(order.create_time).toLocaleDateString("en-NG",
